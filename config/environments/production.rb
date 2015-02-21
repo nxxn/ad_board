@@ -70,7 +70,7 @@ AdBoard::Application.configure do
     :port                 => 587,
     :domain               => "gnotov.com",
     :user_name            => "nikita@gnotov.com",
-    :password             => "ukicat13lol13lol",
+    :password             => "ukicat13lol",
     :authentication       => :plain,
     :enable_starttls_auto => true
   }
