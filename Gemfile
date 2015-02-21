@@ -26,6 +26,8 @@ group :development do
   gem 'awesome_print'
 end
 
+gem 'rails_12factor', group: :production
+
 #Jquery
 gem 'jquery-rails'
 
