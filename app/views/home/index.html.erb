@@ -1,0 +1,25 @@
+<% if current_user %>
+  Hello <%= link_to current_user.email, edit_user_registration_path %>
+  |
+  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+
+  <% if current_user.confirmed_at.nil? %>
+    <br>
+    <br>
+    You need to confirm your email.
+  <% end %>
+
+<% else %>
+  <p>
+    Sign In
+  </p>
+  <%= form_for(:user, :url => session_path(:user)) do |f| %>
+    <%= f.text_field :login %>
+    <%= f.password_field :password %>
+    <%= f.check_box :remember_me %>
+    <%= f.label :remember_me %>
+    <%= f.submit 'Sign in' %>
+    <%= link_to "Forgot your password?", new_password_path(:user) %>
+  <% end %>
+  <%= link_to "Registration", '/sign_up' %>
+<% end %>
