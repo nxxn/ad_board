@@ -1,0 +1,65 @@
+<div class="user_profile_account">
+  <h2>
+    Account:
+  </h2>
+
+  <% if @user.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= @user.unconfirmed_email %></div><br>
+  <% end %>
+
+  <b>Email:</b> <%= @user.email %> <%= link_to "Change email", edit_user_registration_path(email: "true") %>
+  <br><br>
+  <b>Username:</b> <%= @user.username %>
+  <br><br>
+  <%= link_to "Change password", edit_user_registration_path(password: "true") %>
+
+  <br><br>
+</div>
+
+<div class="user_profile_personal">
+  <h2>
+    Personal data:
+  </h2>
+  <b>First Name:</b> <%= @user.first_name %>
+  <br><br>
+  <b>Last Name:</b> <%= @user.last_name %>
+  <br><br>
+  <b>Street:</b> <%= @user.street %>
+  <br><br>
+  <b>Town:</b> <%= @user.town %>
+  <br><br>
+  <b>Country:</b> <%= @user.country %>
+  <br><br>
+  <b>Post index:</b> <%= @user.post_index %>
+  <br><br>
+  <%= link_to "Change personal data", edit_user_registration_path(personal: "true") %>
+</div>
+
+<div class="profile-fields">
+  <% if @user.profile_progress %>
+    <p style="color: green;">
+      Ur good to go!
+    </p>
+  <% else %>
+    <ul>
+      <% if @user.no_first_name? %>
+        <li><span class="not-completed">Fill your first name</span></li>
+      <% end %>
+      <% if @user.no_last_name? %>
+        <li><span class="not-completed">Fill your last name</span></li>
+      <% end %>
+      <% if @user.no_street? %>
+        <li><span class="not-completed">Fill your street</span></li>
+      <% end %>
+      <% if @user.no_town? %>
+        <li><span class="not-completed">Fill your town</span></li>
+      <% end %>
+      <% if @user.no_country? %>
+        <li><span class="not-completed">Fill your country</span></li>
+      <% end %>
+      <% if @user.no_post_index? %>
+        <li><span class="not-completed">Fill your post index</span></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

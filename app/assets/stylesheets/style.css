@@ -1,0 +1,27 @@
+.profile-fields ul {
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+}
+
+.profile-fields li {
+  margin-top: 5px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.profile-fields li i {
+  margin-right: 5px;
+}
+
+.profile-fields li .completed {
+  color: #81CE97;
+}
+
+.profile-fields li .not-completed {
+  color: #e74c3c;
+}
+
+.error_message {
+  color: red;
+}

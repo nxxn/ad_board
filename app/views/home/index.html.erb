@@ -1,6 +1,6 @@
 <% if current_user %>
-  Hello <%= link_to current_user.username, edit_user_registration_path %>
-  |
+  Hello <%= link_to current_user.username, user_path(current_user.id) %> |
+
   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 
   <% if current_user.confirmed_at.nil? %>

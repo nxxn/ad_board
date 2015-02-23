@@ -1,4 +1,6 @@
 AdBoard::Application.routes.draw do
+  root :to => 'home#index'
+
   devise_for :users, controllers: {registrations: 'registrations'}
 
   devise_scope :user do
@@ -6,6 +8,5 @@ AdBoard::Application.routes.draw do
     get "sign_up", to: "devise/registrations#new"
   end
 
-  root :to => 'home#index'
-
+  resources :users
 end
