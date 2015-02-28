@@ -1,24 +1,24 @@
-<% if current_user && current_user.profile_progress %>
-  <div class="main_page_buttons">
+<div class="main_page_buttons">
+  <% if current_user && current_user.profile_progress %>
     <!-- Button trigger modal -->
     <button type="button" class="new_task_button" data-toggle="modal" data-target="#myModal">
       + New task
     </button>
     <%= render partial: 'tasks/new_task_form', locals: { task: @task } %>
-    <button type="button" class="all_tasks_button" data-toggle="modal" data-target="#myModal">
-      <a href="#">Tasks</a>
-    </button>
-    <button type="button" class="hot_offers_button" data-toggle="modal" data-target="#myModal">
-      <a href="#">HOT Offers</a>
-    </button>
-    <button type="button" class="gamecodes_button" data-toggle="modal" data-target="#myModal">
-      <a href="#">Gamecodes</a>
-    </button>
-    <button type="button" class="virtual_currency_button" data-toggle="modal" data-target="#myModal">
-      <a href="#">Virtual Currency</a>
-    </button>
-  </div>
-<% end %>
+  <% end %>
+  <button type="button" class="all_tasks_button" data-toggle="modal" data-target="#myModal">
+    <a href="#">Tasks</a>
+  </button>
+  <button type="button" class="hot_offers_button" data-toggle="modal" data-target="#myModal">
+    <a href="#">HOT Offers</a>
+  </button>
+  <button type="button" class="gamecodes_button" data-toggle="modal" data-target="#myModal">
+    <a href="#">Gamecodes</a>
+  </button>
+  <button type="button" class="virtual_currency_button" data-toggle="modal" data-target="#myModal">
+    <a href="#">Virtual Currency</a>
+  </button>
+</div>
 
 <ul class="main_page_links_list">
   <li><a href="#" class="active">New</a></li>
