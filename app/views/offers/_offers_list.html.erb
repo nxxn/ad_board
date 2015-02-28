@@ -30,5 +30,28 @@
     <span style="color:red;"><%= offer.status %></span>
     <% end %>
     <br>
+    <% if offer.status == "Pending" && offer.task.user == current_user %>
+      <div class="offers_block_links">
+        <%= link_to "Accept offer", client_accept_offer_path(offer, task_id: offer.task.id), style: "color: green;" %> |
+        <% if offer.worker_times >= offer.client_times && offer.client_times < 3 %>
+          <%= link_to "Counter offer", "#", :data => {toggle: "modal", target: "#counterModal"}, style: "color: #337ab7;" %>
+          <%= render partial: 'offers/counter_form', locals: { existing_offer: offer, task: offer.task } %>
+          |
+        <% end %>
+        <%= link_to "Send a message", "#" %> |
+        <%= link_to "Decline offer", decline_offer_path(offer), style: "color: red;" %>
+      </div>
+    <% elsif offer.status == "Pending" && offer.user == current_user && offer.worker_times < offer.client_times %>
+      <div class="offers_block_links">
+        <%= link_to "Accept offer", worker_accept_offer_path(offer, task_id: offer.task.id), style: "color: green;" %> |
+        <% if offer.client_times > offer.worker_times && offer.worker_times < 3 %>
+          <%= link_to "Counter offer", "#", :data => {toggle: "modal", target: "#counterModal"}, style: "color: #337ab7;" %>
+          <%= render partial: 'offers/counter_form', locals: { existing_offer: offer, task: offer.task } %>
+          |
+        <% end %>
+        <%= link_to "Send a message", "#" %> |
+        <%= link_to "Decline offer", decline_offer_path(offer), style: "color: red;" %>
+      </div>
+    <% end %>
   </div>
 <% end %>
