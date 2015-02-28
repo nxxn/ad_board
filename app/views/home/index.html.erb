@@ -1,7 +1,7 @@
 <div class="main_page_buttons">
   <% if current_user && current_user.profile_progress %>
     <!-- Button trigger modal -->
-    <button type="button" class="new_task_button" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="new_task_button" data-toggle="modal" data-target="#taskModal">
       + New task
     </button>
     <%= render partial: 'tasks/new_task_form', locals: { task: @task } %>
