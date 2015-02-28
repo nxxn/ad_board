@@ -1,0 +1,52 @@
+<h2 style="color: #aecff0;">Offers:</h2>
+<% @task.offers.each do |offer| %>
+  <div class="task_page_offer">
+    <b>User:</b>
+    <%= offer.user.username %>
+    <br>
+    <b><%= offer.user_id == current_user.id ? "Your offered price:" : "Worker offered price:" %></b>
+    <%= offer.worker_price %>
+    <br>
+    <% if offer.client_times > offer.worker_times %>
+      <b><%= offer.user_id == current_user.id ? "Client counter price:" : "Your counter price:" %></b>
+      <%= offer.client_price %>
+      <br>
+    <% end %>
+    <b>Comment:</b>
+    <%= offer.comment %>
+    <br>
+    <b>Status:</b>
+    <% if offer.status == "Pending" %>
+      <span style="color: #337ab7;"><%= offer.status %></span>
+    <% elsif offer.status == "Accepted" %>
+      <span style="color: green;"><%= offer.status %></span>
+    <% else %>
+    <span style="color: red;"><%= offer.status %></span>
+    <% end %>
+    <br>
+    <br>
+    <% if offer.status == "Pending" && @task.user == current_user %>
+      <div class="offers_block_links">
+        <%= link_to "Accept offer", client_accept_offer_path(offer, task_id: @task.id), style: "color: green;" %> |
+        <% if offer.worker_times >= offer.client_times && offer.client_times < 3 %>
+          <%= link_to "Counter offer", "#", :data => {toggle: "modal", target: "#counterModal"}, style: "color: blue;" %>
+          <%= render partial: 'offers/counter_form', locals: { existing_offer: offer, task: @task } %>
+          |
+        <% end %>
+        <%= link_to "Send a message", "#" %> |
+        <%= link_to "Decline offer", decline_offer_path(offer), style: "color: red;" %>
+      </div>
+    <% elsif offer.status == "Pending" && offer.user == current_user && offer.worker_times < offer.client_times %>
+      <div class="offers_block_links">
+        <%= link_to "Accept offer", worker_accept_offer_path(offer, task_id: @task.id), style: "color: green;" %> |
+        <% if offer.client_times > offer.worker_times && offer.worker_times < 3 %>
+          <%= link_to "Counter offer", "#", :data => {toggle: "modal", target: "#counterModal"}, style: "color: blue;" %>
+          <%= render partial: 'offers/counter_form', locals: { existing_offer: offer, task: @task } %>
+          |
+        <% end %>
+        <%= link_to "Send a message", "#" %> |
+        <%= link_to "Decline offer", decline_offer_path(offer), style: "color: red;" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

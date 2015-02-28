@@ -1,0 +1,18 @@
+<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <%= simple_form_for task do |f| %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <%= f.input :name %>
+          <%= f.input :description %>
+          <label for="task_estimated_price">Price</label>
+          <%= f.input :estimated_price, label: false, :input_html => { style: "width: 150px;" }  %>
+          <!-- <%= f.input :term do %>
+            <%= f.select :term, ["This week", "ASAP", "Today"] %>
+          <% end %> -->
+          <button type="submit" class="create_task_button">+ Create task</button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

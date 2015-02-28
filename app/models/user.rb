@@ -11,6 +11,10 @@ class User < ActiveRecord::Base
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login, :current_email, :new_email, :current_password
 
+  has_many :tasks, dependent: :destroy
+  has_many :offers, dependent: :destroy
+  has_many :jobs, dependent: :destroy
+
   validates :username,
             :presence => true,
             :uniqueness => {

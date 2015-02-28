@@ -11,7 +11,43 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150223013702) do
+ActiveRecord::Schema.define(:version => 20150226191454) do
+
+  create_table "jobs", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "task_id"
+    t.string   "status",     :default => ""
+    t.float    "price",      :default => 0.0
+    t.string   "term",       :default => ""
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  create_table "offers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "task_id"
+    t.string   "status",       :default => ""
+    t.float    "client_price", :default => 0.0
+    t.float    "worker_price", :default => 0.0
+    t.text     "comment",      :default => ""
+    t.integer  "client_times", :default => 0
+    t.integer  "worker_times", :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name",            :default => ""
+    t.text     "description",     :default => ""
+    t.float    "estimated_price", :default => 0.0
+    t.string   "term",            :default => ""
+    t.boolean  "active",          :default => true
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false

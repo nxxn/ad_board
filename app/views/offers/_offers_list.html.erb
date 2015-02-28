@@ -1,0 +1,34 @@
+<% @offers.each do |offer| %>
+  <div class="task_page_offer">
+    <b>Task:</b>
+    <br>
+    <b>Task name:</b>
+    <%= offer.task.name %>
+    <br>
+    <b>Task price:</b>
+    <%= offer.task.estimated_price %>
+    <br>
+    <b>Task term:</b>
+    <%= offer.task.term %>
+    <br>
+    <b>Task description:</b>
+    <%= offer.task.description %>
+    <br>
+    <br>
+    <b>Offered price:</b>
+    <%= offer.worker_price %>
+    <br>
+    <b>Comment:</b>
+    <%= offer.comment %>
+    <br>
+    <b>Offer status:</b>
+    <% if offer.status == "Pending" %>
+      <span style="color:#337ab7;"><%= offer.status %></span>
+    <% elsif offer.status == "Accepted" %>
+      <span style="color:green;"><%= offer.status %></span>
+    <% else %>
+    <span style="color:red;"><%= offer.status %></span>
+    <% end %>
+    <br>
+  </div>
+<% end %>

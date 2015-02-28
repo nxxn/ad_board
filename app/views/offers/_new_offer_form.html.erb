@@ -1,0 +1,26 @@
+<div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <%= simple_form_for offer do |f| %>
+    <div class="modal-dialog">
+      <div class="modal-content" style="padding-bottom: 30px;">
+        <div class="modal-body">
+          <b>Task name:</b>
+          <%= task.name %>
+          <br>
+          <b>Task description:</b>
+          <%= task.description %>
+          <br>
+          <b>Task price:</b>
+          <%= task.estimated_price %>
+          <br>
+          <b>Task term:</b>
+          <%= task.term %>
+          <br><br>
+          <%= f.hidden_field :task_id, value: task.id %>
+          <%= f.input :worker_price, :input_html => { :value => task.estimated_price }, label: "Your price" %>
+          <%= f.input :comment %>
+          <button type="submit" class="create_offer_button">Send offer</button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

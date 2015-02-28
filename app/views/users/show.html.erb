@@ -63,3 +63,15 @@
     </ul>
   <% end %>
 </div>
+
+<div class="user_tasks_link">
+  <%= link_to "Your tasks", tasks_user_path(@user) %>
+</div>
+
+<div class="user_offers_link">
+  <%= link_to "Your offers", offers_user_path(@user) %>
+</div>
+
+<div class="user_jobs_link">
+  <%= link_to "Your jobs", jobs_user_path(@user) %>
+</div>

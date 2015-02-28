@@ -1,0 +1,124 @@
+<div class="home_task" style="border: 1px solid black; padding: 10px; margin: 10px;">
+  <% if current_user && task.user_id == current_user.id %>
+    <% if task.offers.count == 0 %>
+      <%= link_to "Edit task", "#", :data => {toggle: "modal", target: "#taskEditModal"} %>
+      <%= render partial: 'tasks/update_task_form', locals: { task: task } %>
+    <% end %>
+    <%= link_to 'Destroy task', task, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+  <% end %>
+  <br>
+  <b>Name:</b>
+  <%= task.name %>
+  <br>
+  <b>Description:</b>
+  <%= task.description %>
+  <br>
+  <b>Price:</b>
+  <%= task.estimated_price %>
+  <br>
+  <b>Term:</b>
+  <%= task.term %>
+  <br>
+  <% unless task.user == current_user %>
+    <p><b>User:</b></p>
+    <%= task.user.username %>
+  <% end %>
+  <% if task.user == current_user %>
+    <% if task.active? %>
+      <span style="color:green;">Active</span>
+    <% else %>
+      <span style="color:red;">Unactive</span>
+    <% end %>
+  <% end %>
+  <br>
+  <br>
+  <% if current_user && current_user.id == task.user_id && task.offers.count > 0 %>
+    <p><b>Offers:</b></p>
+    <% task.offers.each do |offer| %>
+      <b>User:</b>
+      <%= offer.user.username %>
+      <br>
+      <b><%= offer.user_id == current_user.id ? "Your offered price:" : "Worker offered price:" %></b>
+      <%= offer.worker_price %>
+      <br>
+      <% if offer.client_times > offer.worker_times %>
+        <b><%= offer.user_id == current_user.id ? "Client counter price:" : "Your counter price:" %></b>
+        <%= offer.client_price %>
+        <br>
+      <% end %>
+      <b>Comment:</b>
+      <%= offer.comment %>
+      <br>
+      <b>Status:</b>
+      <% if offer.status == "Pending" %>
+        <span style="color:blue;"><%= offer.status %></span>
+      <% elsif offer.status == "Accepted" %>
+        <span style="color:green;"><%= offer.status %></span>
+      <% else %>
+      <span style="color:red;"><%= offer.status %></span>
+      <% end %>
+      <br>
+      <br>
+      <% if offer.status == "Pending" && task.user == current_user %>
+        <div class="offers_block_links">
+          <%= link_to "Accept offer", client_accept_offer_path(offer, task_id: task.id), style: "color: green;" %> |
+          <% if offer.worker_times >= offer.client_times && offer.client_times < 3 %>
+            <%= link_to "Counter offer", "#", :data => {toggle: "modal", target: "#counterModal"}, style: "color: blue;" %>
+            <%= render partial: 'offers/counter_form', locals: { existing_offer: offer, task: task } %>
+            |
+          <% end %>
+          <%= link_to "Send a message", "#" %> |
+          <%= link_to "Decline offer", decline_offer_path(offer), style: "color: red;" %>
+        </div>
+        <br>
+        <br>
+      <% elsif offer.status == "Pending" && offer.user == current_user && offer.worker_times < offer.client_times %>
+        <div class="offers_block_links">
+          <%= link_to "Accept offer", worker_accept_offer_path(offer, task_id: task.id), style: "color: green;" %> |
+          <% if offer.client_times > offer.worker_times && offer.worker_times < 3 %>
+            <%= link_to "Counter offer", "#", :data => {toggle: "modal", target: "#counterModal"}, style: "color: blue;" %>
+            <%= render partial: 'offers/counter_form', locals: { existing_offer: offer, task: task } %>
+            |
+          <% end %>
+          <%= link_to "Send a message", "#" %> |
+          <%= link_to "Decline offer", decline_offer_path(offer), style: "color: red;" %>
+        </div>
+        <br>
+        <br>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% if task.jobs.count > 0 %>
+    <p>
+      <b>Job:</b>
+    </p>
+    <% task.jobs.each do |job| %>
+      <b>User:</b>
+      <%= job.user.username %>
+      <br>
+      <b>Status:</b>
+      <% if job.status == "Started" %>
+        <span style="color: blue;"><%= job.status %></span>
+      <% else %>
+        <span style="color: green;"><%= job.status %></span>
+      <% end %>
+      <br>
+      <b>Price:</b>
+      <%= job.price %>
+      <br>
+    <% end %>
+  <% end %>
+  <% if current_user && task.user_id != current_user.id %>
+    <% current_user_offers = task.offers.where(user_id: current_user.id).first %>
+    <% if current_user && current_user.profile_progress && !current_user_offers %>
+      <div class="new_offer" style="border: 1px solid black; padding: 10px; margin: 10px;">
+        <p><b>New offer:</b></p>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerModal">
+          New offer
+        </button>
+        <%= render partial: 'offers/new_offer_form', locals: { offer: offer, task: task } %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

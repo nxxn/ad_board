@@ -4,16 +4,55 @@
   <title>AdBoard</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <% unless controller_name == "home" %>
-    <div class="logo">
-      <a href="/">Main Page</a>
+  <div class="global_header">
+    <div class="container">
+      <% unless controller_name == "home" %>
+        <div class="logo">
+          <a href="/">Main Page</a>
+        </div>
+      <% end %>
+      <% if current_user %>
+        Hello <%= link_to current_user.username, user_path(current_user.id) %> |
+
+        <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+
+        <% if current_user.confirmed_at.nil? %>
+          <br>
+          <br>
+          You need to confirm your email.
+        <% end %>
+
+      <% else %>
+        <p>
+          Sign In
+        </p>
+        <%= form_for(:user, :url => session_path(:user)) do |f| %>
+          <%= f.text_field :login %>
+          <%= f.password_field :password %>
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+          <%= f.submit 'Sign in' %>
+          <%= link_to "Forgot your password?", new_password_path(:user) %>
+        <% end %>
+        <%= link_to "Registration", '/sign_up' %>
+      <% end %>
     </div>
-  <% end %>
-
-<%= yield %>
-
+  </div>
+  <div class="fullwidth_container">
+    <div class="container">
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>

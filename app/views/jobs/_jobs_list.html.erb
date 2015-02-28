@@ -1,0 +1,17 @@
+<% jobs.each do |job| %>
+  <div class="task_page_offer">
+    <b>Task:</b>
+    <%= job.task.name %>
+    <br>
+    <b>Status:</b>
+    <% if job.status == "Started" %>
+      <span style="color: #337ab7;"><%= job.status %></span>
+    <% else %>
+      <span style="color: green;"><%= job.status %></span>
+    <% end %>
+    <br>
+    <b>Price:</b>
+    <%= job.price %>
+    <br>
+  </div>
+<% end %>

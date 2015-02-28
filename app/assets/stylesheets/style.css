@@ -1,3 +1,261 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* Header start */
+.global_header {
+  border-bottom-color: #171a21;
+  background: #171a21;
+  height: 100px;
+}
+/* Header end */
+
+/* Main page start */
+.fullwidth_container {
+  background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/313120/page_bg_v6.jpg?t=1423535978');
+  background-position: center top;
+  height: 100%;
+}
+
+button {
+  border: none;
+  color: #fff !important;
+  width: 120px;
+  height: 35px;
+}
+
+button a {
+  color: #fff;
+}
+
+button a:hover {
+  color: #fff;
+}
+
+.new_task_button {
+  background-color: #0b5e18;
+}
+
+.new_task_button:hover {
+  text-decoration: underline;
+}
+
+.all_tasks_button {
+  background-color: #2d455d;
+}
+
+.hot_offers_button {
+  background-color: #7e3236;
+}
+
+.gamecodes_button {
+  background-color: #563d65;
+}
+
+.virtual_currency_button {
+  background-color: #6f6329;
+}
+
+.main_page_buttons {
+  margin: 20px 0 20px 30px;
+}
+
+.main_page_links_list {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  border-bottom: 1px solid #33516d;
+  height: 42px;
+}
+
+.main_page_links_list li:first-child {
+  margin-left: 30px;
+}
+
+.main_page_links_list li {
+  float: left;
+}
+
+.main_page_links_list li a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid #33516d;
+  border-radius: 15px 15px 0 0;
+  display: block;
+  padding: 10px 25px;
+  color: #8098b0;
+}
+
+.main_page_links_list li a.active {
+  color: #accfef;
+  cursor: default;
+  background-color: #33516d;
+  border: 1px solid #33516d;
+  border-bottom-color: transparent;
+}
+
+.home_tasks_container {
+  width: 700px;
+  margin-left: 30px;
+}
+
+.home_task {
+  width: 700px;
+  height: 100px;
+  margin: 10px 0 0;
+}
+
+.home_task_left {
+  float: left;
+  width: 220px;
+  height: 100%;
+  margin-right: 10px;
+  background-color: #131b26;
+}
+
+.home_task_left_avatar {
+  width: 100px;
+  float: left;
+}
+
+.home_task_right_user_info {
+  width: 120px;
+  float: left;
+  padding-left: 10px;
+}
+
+.home_task_right_user_info_username {
+  color: #e5eef5;
+}
+
+.home_task_right_user_info_level {
+  color: #919ba5;
+  margin-top: 10px;
+}
+
+.home_task_right_user_info_rating {
+  color: #5d6771;
+  margin-top: 25px;
+}
+
+.home_task_right {
+  width: 470px;
+  height: 100%;
+  background-color: #131b26;
+  float: left;
+  padding-left: 10px;
+}
+
+.home_task_right_name {
+  width: 100%;
+  color: #aecff0;
+  float: left;
+}
+
+.home_task_right_bottom {
+  width: 100%;
+  float: left;
+}
+
+.home_task_right_bottom_description {
+  width: 360px;
+  color: #7d8598;
+  float: left;
+  margin-top: 10px;
+}
+
+.home_task_right_bottom_term {
+  width: 360px;
+  color: #495a6c;
+  float: left;
+  margin-top: 25px;
+}
+
+.home_task_right_bottom_price {
+  width: 100px;
+  color: #6f839b;
+  float: left;
+  margin-top: -10px;
+}
+
+.home_task_price {
+  width: 90px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.make_offer_button {
+  background-color: #0d5e19;
+  color: #fff;
+  width: 90px;
+  height: 25px;
+}
+
+/* Main page end */
+
+/* User tasks start */
+
+.user_tasks_buttons {
+  margin: 20px 0 20px 30px;
+}
+
+.task_page_offer {
+  background-color: #131b26;
+  color: #7d8598;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+/* User tasks end */
+
+/* Modal window start */
+
+.modal-dialog .modal-content {
+  background-color: #213242;
+  border-radius: 0;
+  border: 1px solid #5a8598;
+}
+
+.modal-dialog .modal-content label {
+  color: #97a1ab;
+  font-weight: normal;
+}
+
+.modal-dialog .modal-content input {
+  background-color: #141d26;
+  border-radius: 0;
+  border: 1px solid #5a8598;
+  width: 100%;
+  color: #b7d2f0;
+}
+
+.modal-dialog .modal-content textarea {
+  background-color: #141d26;
+  border-radius: 0;
+  border: 1px solid #5a8598;
+  width: 100%;
+  color: #b7d2f0;
+}
+
+.create_task_button {
+  width: 120px;
+  float: right;
+  margin-top: -30px;
+  background-color: #0b5e18;
+}
+
+.create_offer_button {
+  width: 120px;
+  float: right;
+  background-color: #0b5e18;
+}
+
+/* Modal window end */
+
 .profile-fields ul {
   display: inline-block;
   width: 100%;

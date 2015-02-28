@@ -35,4 +35,7 @@ gem 'jquery-rails'
 gem 'devise'
 
 #Captcha
-gem "recaptcha", :require => "recaptcha/rails"
+gem 'recaptcha', :require => 'recaptcha/rails'
+
+#Simple forms
+gem 'simple_form'

@@ -1,0 +1,40 @@
+<div class="modal fade" id="counterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <%= simple_form_for existing_offer do |f| %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">New offer</h4>
+        </div>
+        <div class="modal-body">
+          <b>Task name:</b>
+          <%= task.name %>
+          <br>
+          <b>Task description:</b>
+          <%= task.description %>
+          <br>
+          <b>Task price:</b>
+          <%= task.estimated_price %>
+          <br>
+          <b>Task term:</b>
+          <%= task.term %>
+          <br><br>
+          <%= f.hidden_field :task_id, value: task.id %>
+          <% if existing_offer.user_id == current_user.id %>
+            <b>Client offered price:</b>
+            <%= existing_offer.client_price %>
+            <%= f.input :worker_price, label: "Your price" %>
+          <% else %>
+            <b>Worker offered price:</b>
+            <%= existing_offer.worker_price %>
+            <%= f.input :client_price, label: "Your price" %>
+            <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Send offer</button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
