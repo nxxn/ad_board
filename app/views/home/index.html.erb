@@ -1,0 +1,77 @@
+<% if current_user && current_user.profile_progress %>
+  <div class="main_page_buttons">
+    <!-- Button trigger modal -->
+    <button type="button" class="new_task_button" data-toggle="modal" data-target="#myModal">
+      + New task
+    </button>
+    <%= render partial: 'tasks/new_task_form', locals: { task: @task } %>
+    <button type="button" class="all_tasks_button" data-toggle="modal" data-target="#myModal">
+      <a href="#">Tasks</a>
+    </button>
+    <button type="button" class="hot_offers_button" data-toggle="modal" data-target="#myModal">
+      <a href="#">HOT Offers</a>
+    </button>
+    <button type="button" class="gamecodes_button" data-toggle="modal" data-target="#myModal">
+      <a href="#">Gamecodes</a>
+    </button>
+    <button type="button" class="virtual_currency_button" data-toggle="modal" data-target="#myModal">
+      <a href="#">Virtual Currency</a>
+    </button>
+  </div>
+<% end %>
+
+<ul class="main_page_links_list">
+  <li><a href="#" class="active">New</a></li>
+  <li><a href="#">Price</a></li>
+</ul>
+
+<div class="home_tasks_container">
+  <% @tasks.each do |task| %>
+    <div class="home_task">
+      <div class="home_task_left">
+        <div class="home_task_left_avatar">
+          <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+        </div>
+        <div class="home_task_right_user_info">
+          <div class='home_task_right_user_info_username'>
+            <%= task.user.username %>
+          </div>
+          <div class='home_task_right_user_info_level'>
+            LEVEL 2
+          </div>
+          <div class='home_task_right_user_info_rating'>
+            ***** (98)
+          </div>
+        </div>
+      </div>
+      <div class="home_task_right">
+        <div class="home_task_right_name">
+          <%= task.name %>
+        </div>
+        <div class="home_task_right_bottom">
+          <div class="home_task_right_bottom_description">
+            <%= task.description %>
+          </div>
+          <div class="home_task_right_bottom_term">
+            <%= task.term %>
+          </div>
+          <div class="home_task_right_bottom_price">
+            <div class="home_task_price">
+              <%= task.estimated_price %> €
+            </div>
+            <!-- Button trigger modal -->
+            <% if current_user && task.user_id != current_user.id %>
+              <% current_user_offers = task.offers.where(user_id: current_user.id).first %>
+              <% if current_user.profile_progress && !current_user_offers %>
+                <button type="button" class="make_offer_button" data-toggle="modal" data-target="#offerModal">
+                  Make Offer
+                </button>
+                <%= render partial: 'offers/new_offer_form', locals: { offer: @offer, task: task } %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
