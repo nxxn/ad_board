@@ -22,8 +22,6 @@ end
 group :development do
   #Used for debugging n+1
   gem 'bullet'
-  #Can print all your data in console with @ap data
-  gem 'awesome_print'
 end
 
 gem 'rails_12factor', group: :production
@@ -39,3 +37,6 @@ gem 'recaptcha', :require => 'recaptcha/rails'
 
 #Simple forms
 gem 'simple_form'
+
+#Can print all your data in console with @ap data
+gem 'awesome_print'
