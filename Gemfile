@@ -40,3 +40,10 @@ gem 'simple_form'
 
 #Can print all your data in console with @ap data
 gem 'awesome_print'
+
+#Admin panel
+gem 'activeadmin', github: 'activeadmin'
+gem 'active_skin'
+
+#Country select
+gem 'country_select', github: 'stefanpenner/country_select'

@@ -6,19 +6,80 @@ body {
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
+.container {
+  width: 970px !important;
+  padding: 0px !important;
+}
+
 /* Header start */
+
 .global_header {
   border-bottom-color: #171a21;
   background: #171a21;
   height: 100px;
 }
+
+.logo {
+  float: left;
+  margin: 20px 0 0 30px;
+  font-size: 40px;
+}
+
+.header_welcome {
+  float: right;
+  margin: 35px 20px 0 0;
+  color: #8098b0;
+  font-size: 18px;
+}
+
+.header_login_form {
+  float: right;
+  color: #8098b0;
+  margin: 8px 20px 0 0;
+}
+
+.header_login_form input {
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.login_button {
+  width: 100px;
+  border-radius: 0px;
+  background-color: #33516d;
+  border: none;
+  color: #accfef;
+  height: 25px !important;
+  float: left;
+}
+
+.registration_button {
+  float: right;
+  height: 25px;
+  background-color: #33516d;
+  color: #accfef;
+  padding: 3px 10px 0 10px;
+  margin-right: 4px;
+}
+
+.registration_button a {
+  color: #accfef;
+}
+
+.registration_button a:hover {
+  color: #accfef;
+  text-decoration: none;
+}
+
 /* Header end */
 
 /* Main page start */
 .fullwidth_container {
-  background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/313120/page_bg_v6.jpg?t=1423535978');
-  background-position: center top;
+  /*background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/313120/page_bg_v6.jpg?t=1423535978');
+  background-position: center top;*/
+  background-color: #27374e;
   height: 100%;
+  color: #8098b0;
 }
 
 button {
@@ -99,13 +160,13 @@ button a:hover {
 }
 
 .home_tasks_container {
-  width: 700px;
+  width: 100%;
   margin-left: 30px;
 }
 
 .home_task {
   width: 700px;
-  height: 100px;
+  height: 180px;
   margin: 10px 0 0;
 }
 
@@ -151,13 +212,18 @@ button a:hover {
 }
 
 .home_task_right_name {
-  width: 100%;
+  width: 360px;
   color: #aecff0;
   float: left;
 }
 
+.home_task_right_name a {
+  text-decoration: none;
+  color: #aecff0;;
+}
+
 .home_task_right_bottom {
-  width: 100%;
+  width: 360px;
   float: left;
 }
 
@@ -166,6 +232,11 @@ button a:hover {
   color: #7d8598;
   float: left;
   margin-top: 10px;
+}
+
+.home_task_right_bottom_description a {
+  text-decoration: none;
+  color: #7d8598;
 }
 
 .home_task_right_bottom_term {
@@ -179,7 +250,7 @@ button a:hover {
   width: 100px;
   color: #6f839b;
   float: left;
-  margin-top: -10px;
+  margin-top: 5px;
 }
 
 .home_task_price {
@@ -193,6 +264,54 @@ button a:hover {
   color: #fff;
   width: 90px;
   height: 25px;
+}
+
+.home_task_game_name {
+  float: left;
+  width: 450px;
+  color: #455b69;
+  border-bottom: 1px solid #455b69;
+  padding-bottom: 10px;
+}
+
+.home_task_play_methods {
+  float: left;
+  width: 450px;
+  color: #7d8598;
+  padding-top: 10px;
+}
+
+.home_tasks_container_left {
+  width: 700px;
+  float: left;
+}
+
+.sorting_container {
+  width: 200px;
+  margin: 10px 0 0 20px;
+  color: #b0cfee;
+  float: left;
+}
+
+.sorting_block {
+  width: 100%;
+  border: 2px solid #35506d;
+}
+
+.sorting_header {
+  width: 100%;
+  height: 30px;
+  background-color: #35506d;
+  padding: 5px 10px 0 10px;
+}
+
+.sorting_games, .play_methods {
+  margin: 20px 0 0 0;
+}
+
+.sorting_content {
+  margin: 10px 0;
+  padding: 0px 20px;
 }
 
 /* Main page end */
@@ -254,7 +373,39 @@ button a:hover {
   background-color: #0b5e18;
 }
 
+.modal_heading {
+  color: #97a1ab;
+  margin: 20px 0 10px 0;
+}
+
+.modal_text {
+  color: #b6d1ef;
+}
+
+.make_offer_button_container {
+  margin-top: 20px;
+  height: 25px;
+}
+
+.make_offer_button_container button {
+  float: right;
+}
+
+.checkbox {
+  margin-left: 20px;
+}
+
+.select {
+  margin: 10px 0;
+}
+
+.select label {
+  margin: 0 20px 0 0;
+}
+
 /* Modal window end */
+
+/* Profile start */
 
 .profile-fields ul {
   display: inline-block;
@@ -283,3 +434,9 @@ button a:hover {
 .error_message {
   color: red;
 }
+
+.user_profile_account, .user_profile_personal {
+  color: #8098b0;
+}
+
+/* Profile end */

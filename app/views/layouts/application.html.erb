@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AdBoard</title>
+  <title>Take Your Quest</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <!-- Latest compiled and minified CSS -->
@@ -17,35 +17,36 @@
 <body>
   <div class="global_header">
     <div class="container">
-      <% unless controller_name == "home" %>
-        <div class="logo">
-          <a href="/">Main Page</a>
-        </div>
-      <% end %>
+      <div class="logo">
+        <a href="/">EasyGame.com</a>
+      </div>
       <% if current_user %>
-        Hello <%= link_to current_user.username, user_path(current_user.id) %> |
+        <div class="header_welcome">
+          Hello <%= link_to current_user.username, user_path(current_user.id) %> |
 
-        <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+          <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
 
-        <% if current_user.confirmed_at.nil? %>
-          <br>
-          <br>
-          You need to confirm your email.
-        <% end %>
-
+          <% if current_user.confirmed_at.nil? %>
+            <br>
+            You need to confirm your email.
+          <% end %>
+        </div>
       <% else %>
-        <p>
-          Sign In
-        </p>
+      <div class="header_login_form">
         <%= form_for(:user, :url => session_path(:user)) do |f| %>
-          <%= f.text_field :login %>
-          <%= f.password_field :password %>
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
-          <%= f.submit 'Sign in' %>
-          <%= link_to "Forgot your password?", new_password_path(:user) %>
+          <%= f.text_field :login, placeholder: "Username" %>
+          <br>
+          <%= f.password_field :password, placeholder: "Password" %>
+          <%= f.hidden_field :remember_me, checked: true %>
+          <br>
+          <%= f.submit 'Login', class: "login_button" %>
+          <!-- <%= link_to "Forgot your password?", new_password_path(:user) %> -->
+          <div class="registration_button">
+            <%= link_to "Registration", '/sign_up' %>
+          </div>
         <% end %>
-        <%= link_to "Registration", '/sign_up' %>
+
+      </div>
       <% end %>
     </div>
   </div>

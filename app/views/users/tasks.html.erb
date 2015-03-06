@@ -1,13 +1,14 @@
 <div class="user_tasks_buttons">
   <!-- Button trigger modal -->
   <button type="button" class="new_task_button" data-toggle="modal" data-target="#taskModal">
-    + New task
+    + New quest
   </button>
   <%= render partial: 'tasks/new_task_form', locals: { task: @task } %>
 </div>
 
 <div class="home_tasks_container">
   <% @tasks.each do |task| %>
+    <% pending_offers = task.offers.where(status: "Pending").count %>
     <div class="home_task">
       <div class="home_task_left">
         <div class="home_task_left_avatar">
@@ -26,28 +27,44 @@
         </div>
       </div>
       <div class="home_task_right">
-        <div class="home_task_right_name">
-          <%= link_to task.name, task_path(task) %>
-        </div>
         <div class="home_task_right_bottom">
+          <div class="home_task_right_name">
+            <%= link_to task.name, "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
+          </div>
           <div class="home_task_right_bottom_description">
-            <%= task.description %>
+            <%= link_to task.description, "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
           </div>
           <div class="home_task_right_bottom_term">
             <%= task.term %>
           </div>
-          <div class="home_task_right_bottom_price" style="margin-top: -22px;">
-            <div class="home_task_price">
-              <%= task.estimated_price %> €
-            </div>
-            <% if current_user && task.user_id == current_user.id %>
-              <% if task.offers.count == 0 %>
-                <%= link_to "Edit task", "#", :data => {toggle: "modal", target: "#taskEditModal"} %>
-                <%= render partial: 'tasks/update_task_form', locals: { task: task } %>
-              <% end %>
-              <%= link_to 'Destroy task', task, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-            <% end %>
+        </div>
+        <div class="home_task_right_bottom_price">
+          <div class="offers_count">
+            Offers: <%= pending_offers %> / <%= @max_offers_count_for_quest %>
           </div>
+          <div class="home_task_price">
+            <%= task.estimated_price %> €
+          </div>
+          <% if current_user && task.user_id == current_user.id %>
+            <% if task.offers.count == 0 %>
+              <%= link_to "Edit task", "#", :data => {toggle: "modal", target: "#taskEditModal"} %>
+              <%= render partial: 'tasks/update_task_form', locals: { task: task } %>
+            <% end %>
+            <%= link_to 'Destroy task', task, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
+          <% end %>
+        </div>
+        <div class="home_task_game_name">
+          <% if task.game && task.quest_type %>
+            <%= task.game.name %> / <%= task.quest_type.name %>
+          <% end %>
+        </div>
+        <div class="home_task_play_methods">
+          <% if task.play_methods.count > 0 %>
+            <% task.play_methods.each do |method| %>
+              <%= method.name %>
+              <br>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>

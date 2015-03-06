@@ -1,4 +1,6 @@
 AdBoard::Application.routes.draw do
+  ActiveAdmin.routes(self)
+
   root :to => 'home#index'
 
   devise_for :users, controllers: {registrations: 'registrations'}
@@ -10,14 +12,15 @@ AdBoard::Application.routes.draw do
 
   resources :users do
     member do
-      get :tasks
+      get :tasks, :path => '/quests'
       get :offers
       get :jobs
       get :create_offer
     end
   end
 
-  resources :tasks
+  resources :tasks, :path => '/quests'
+
   resources :offers do
     member do
       get :client_accept
@@ -26,6 +29,7 @@ AdBoard::Application.routes.draw do
       get :counter
     end
   end
+  
   #resources :jobs
 
 end

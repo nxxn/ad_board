@@ -6,13 +6,13 @@ class UsersController < ApplicationController
 
   def tasks
     @user = User.find params[:id]
-    @tasks = Task.where(user_id: @user.id).includes(:user)
+    @tasks = Task.where(user_id: @user.id).includes(:user, :game, :quest_type, :play_methods)
     @task = Task.new
   end
 
   def offers
     @user = User.find params[:id]
-    @offers = @user.offers
+    @offers = Offer.where(user_id: @user.id).includes(:user, :task => [:user])
   end
 
   def jobs

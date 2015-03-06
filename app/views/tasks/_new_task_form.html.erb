@@ -5,6 +5,9 @@
         <div class="modal-body">
           <%= f.input :name %>
           <%= f.input :description %>
+          <%= f.association :game %>
+          <%= f.association :quest_type %>
+          <%= f.association :play_methods, as: :check_boxes, label: "Play Methods:" %>
           <label for="task_estimated_price">Price</label>
           <%= f.input :estimated_price, label: false, :input_html => { style: "width: 150px;" }  %>
           <!-- <%= f.input :term do %>

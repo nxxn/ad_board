@@ -1,0 +1,80 @@
+<div class="modal fade" id="taskShowModal-<%= task.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal_heading">
+          Quest name:
+        </div>
+        <div class="modal_text">
+          <%= task.name %>
+        </div>
+        <div class="modal_heading">
+          Quest description:
+        </div>
+        <div class="modal_text">
+          <%= task.description %>
+        </div>
+        <div class="modal_heading">
+          Quest price:
+        </div>
+        <div class="modal_text">
+          <%= task.estimated_price %>
+        </div>
+        <% if task.game && task.quest_type %>
+          <div class="modal_heading">
+            Quest game:
+          </div>
+          <div class="modal_text">
+            <%= task.game.name %>
+          </div>
+          <div class="modal_heading">
+            Quest type:
+          </div>
+          <div class="modal_text">
+            <%= task.quest_type.name %>
+          </div>
+        <% end %>
+        <% if task.play_methods.count > 0 %>
+          <div class="modal_heading">
+            Quest play methods:
+          </div>
+          <div class="modal_text">
+            <% task.play_methods.each do |method| %>
+              <%= method.name %>
+              <br>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if current_user && current_user.profile_progress && task.user_id != current_user.id %>
+          <% current_user_offers = task.offers.where(user_id: current_user.id).first %>
+          <% if !current_user_offers %>
+            <div class="make_offer_button_container">
+              <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal">
+                Make Offer
+              </button>
+            </div>
+          <% else %>
+            You already submitted offer
+          <% end %>
+        <% elsif current_user && !current_user.profile_progress %>
+          <div class="make_offer_button_container">
+            <%= link_to edit_user_registration_path(personal: "true") do %>
+              <button type="button" class="make_offer_button modal_button">
+                Make Offer
+              </button>
+            <% end %>
+          </div>
+        <% elsif !current_user %>
+          <div class="make_offer_button_container">
+            <%= link_to "/sign_up" do %>
+              <button type="button" class="make_offer_button modal_button">
+                Make Offer
+              </button>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
