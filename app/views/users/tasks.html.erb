@@ -29,10 +29,10 @@
       <div class="home_task_right">
         <div class="home_task_right_bottom">
           <div class="home_task_right_name">
-            <%= link_to task.name, "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
+            <%= link_to task.name, task_path(task) %>
           </div>
           <div class="home_task_right_bottom_description">
-            <%= link_to task.description, "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
+            <%= link_to task.description, task_path(task) %>
           </div>
           <div class="home_task_right_bottom_term">
             <%= task.term %>
