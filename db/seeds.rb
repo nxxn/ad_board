@@ -5,3 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Setting.create(key: "max_offers_count_for_quest", value: "10", description: "Max offers count for one quest")
