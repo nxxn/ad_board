@@ -166,8 +166,9 @@ button a:hover {
 
 .home_task {
   width: 700px;
-  height: 180px;
+  height: 100%;
   margin: 10px 0 0;
+  float: left;
 }
 
 .home_task_left {
@@ -208,7 +209,7 @@ button a:hover {
   height: 100%;
   background-color: #131b26;
   float: left;
-  padding-left: 10px;
+  padding: 10px 0 0 10px;
 }
 
 .home_task_right_name {
@@ -278,7 +279,7 @@ button a:hover {
   float: left;
   width: 450px;
   color: #7d8598;
-  padding-top: 10px;
+  padding: 10px 0;
 }
 
 .home_tasks_container_left {
