@@ -79,4 +79,15 @@ AdBoard::Application.configure do
     :host => "stark-spire-6006.herokuapp.com"
   }
 
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => 'adboard-prod',
+      :access_key_id => 'AKIAJXC5VFDHVRF2T5LA',
+      :secret_access_key => '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'
+    },
+    :s3_headers => { 'Cache-Control' => 'max-age=315576000', 'Expires' => 10.years.from_now.httpdate },
+    :url  => ":s3_eu_url"
+  }
+
 end

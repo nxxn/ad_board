@@ -20,6 +20,13 @@
   <h2>
     Personal data:
   </h2>
+  <% if @user.avatar.present? %>
+    <%= image_tag @user.avatar.url(:thumb), alt: "Avatar" %>
+    <br><br>
+  <% else %>
+    <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+    <br><br>
+  <% end %>
   <b>First Name:</b> <%= @user.first_name %>
   <br><br>
   <b>Last Name:</b> <%= @user.last_name %>
@@ -37,6 +44,7 @@
 
 <div class="profile-fields">
   <% if @user.profile_progress %>
+    <br>
     <p style="color: green;">
       Ur good to go!
     </p>
@@ -62,6 +70,11 @@
       <% end %>
     </ul>
   <% end %>
+  <% if !@user.approved %>
+    Wait while administrator will approve your account
+    <br>
+    <br>
+  <% end %>
 </div>
 
 <% if @user.profile_progress %>
@@ -71,6 +84,10 @@
 
   <div class="user_offers_link">
     <%= link_to "Your offers", offers_user_path(@user) %>
+  </div>
+
+  <div class="add_money">
+    <%= link_to "Add EG", @user.paypal_url(user_url(@user.id)) %>
   </div>
 
   <!-- <div class="user_jobs_link">

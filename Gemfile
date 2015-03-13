@@ -47,3 +47,7 @@ gem 'active_skin'
 
 #Country select
 gem 'country_select', github: 'stefanpenner/country_select'
+
+#Photos upload
+gem 'paperclip'
+gem 'aws-sdk', '< 2.0'

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  protect_from_forgery except: [:hook, :show]
 
   def show
     @user = User.find params[:id]
@@ -26,6 +27,25 @@ class UsersController < ApplicationController
     @new_price = params[:new_price] if params[:new_price].present?
 
     @offer = Offer.create(user_id: current_user.id, task_id: @task.id, status: "")
+  end
+
+  def manual_approve
+    @user = User.find(params[:id])
+    @user.approved = true
+    @user.save
+
+    redirect_to :back
+  end
+
+  def hook
+    params.permit! # Permit all Paypal input params
+    ap params
+    status = params[:payment_status]
+    if status == "Completed"
+      @registration = Registration.find params[:invoice]
+      @registration.update_attributes notification_params: params, status: status, transaction_id: params[:txn_id], purchased_at: Time.now
+    end
+    render nothing: true
   end
 
 end

@@ -16,8 +16,12 @@ AdBoard::Application.routes.draw do
       get :offers
       get :jobs
       get :create_offer
+      get :manual_approve
     end
   end
+
+  post "/users/:id" => "users#show"
+  post "/hook" => "users#hook"
 
   resources :tasks, :path => '/quests'
 
@@ -29,7 +33,7 @@ AdBoard::Application.routes.draw do
       get :counter
     end
   end
-  
+
   #resources :jobs
 
 end

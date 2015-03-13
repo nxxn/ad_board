@@ -1,9 +1,13 @@
 html, body {
   height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif !important;
+  background-color: #27374e;
 }
 
 .container {
@@ -78,8 +82,10 @@ body {
   /*background-image: url('http://cdn.akamai.steamstatic.com/steam/apps/313120/page_bg_v6.jpg?t=1423535978');
   background-position: center top;*/
   background-color: #27374e;
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   color: #8098b0;
+  padding-bottom: 20px;
 }
 
 button {

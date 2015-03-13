@@ -15,8 +15,6 @@ ActiveAdmin.register User do
   form do |f|
     f.inputs do
       f.input :email
-      f.input :password
-      f.input :password_confirmation
       f.input :username
       f.input :first_name
       f.input :last_name
@@ -26,6 +24,7 @@ ActiveAdmin.register User do
       f.input :country, as: :string
       f.input :phone
       f.input :is_admin
+      f.input :approved
     end
     actions
   end
@@ -43,6 +42,7 @@ ActiveAdmin.register User do
     column :country
     column :phone
     column :is_admin
+    column ("Approved"){ |u| u.approved ? u.approved : link_to("Approve user", manual_approve_user_path(u.id))  }
     actions
   end
 

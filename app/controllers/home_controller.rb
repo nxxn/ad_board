@@ -1,7 +1,19 @@
 class HomeController < ApplicationController
 
   def index
-    @tasks = Task.where(active: true).includes(:user, :game, :quest_type, :play_methods)
+    if params[:genre].present?
+      @genre = Genre.where(name: params[:genre]).first
+      @tasks = []
+      @genre.games.each{|g| @tasks = @tasks + g.tasks.includes(:user, :game, :quest_type, :play_methods) }
+    elsif params[:game].present?
+      @game = Game.where(name: params[:game]).first
+      @tasks = @game.tasks.includes(:user, :game, :quest_type, :play_methods)
+    elsif params[:play_method].present?
+      @method = PlayMethod.where(name: params[:play_method]).first
+      @tasks = @method.tasks.includes(:user, :game, :quest_type, :play_methods)
+    else
+      @tasks = Task.where(active: true).includes(:user, :game, :quest_type, :play_methods)
+    end
 
     @task = Task.new
     @offer = Offer.new

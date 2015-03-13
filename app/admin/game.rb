@@ -3,6 +3,12 @@ ActiveAdmin.register Game do
 
   filter :name
 
+  controller do
+     def scoped_collection
+       Game.includes(:genre)
+     end
+   end
+
   index do
     selectable_column
     id_column

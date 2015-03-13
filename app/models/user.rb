@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :authentication_keys => [:login]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :first_name, :last_name, :street, :post_index, :town, :country, :phone, :login, :current_email, :new_email, :current_password
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :first_name, :last_name, :street, :post_index, :town, :country, :phone, :login, :current_email, :new_email, :current_password, :avatar, :is_admin, :approved
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
@@ -15,11 +15,19 @@ class User < ActiveRecord::Base
   has_many :offers, dependent: :destroy
   has_many :jobs, dependent: :destroy
 
+  has_attached_file :avatar,
+                    :storage => :s3,
+                    :styles => { :thumb => "100x1000>"},
+                    :convert_options => {:thumb => '-strip -interlace plane -quality 90'},
+                    :path => "user_avatars/:id.:style.:extension"
+
   validates :username,
             :presence => true,
             :uniqueness => {
               :case_sensitive => false
             }
+
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
@@ -65,5 +73,22 @@ class User < ActiveRecord::Base
 
   def no_country?
     country.blank?
+  end
+
+  serialize :notification_params, Hash
+  def paypal_url(return_path)
+    values = {
+        business: "n.gnotov-facilitator@gmail.com",
+        cmd: "_xclick",
+        upload: 1,
+        return: return_path,
+        invoice: SecureRandom.uuid,
+        amount: 10,
+        item_name: "test",
+        item_number: self.id,
+        quantity: '1',
+        notify_url: "http://ad_board.ngrok.com/hook"
+    }
+    "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
   end
 end

@@ -22,9 +22,24 @@
       <%= f.label :username %><br />
       <%= f.text_field :username %>
     </div>
+    <br>
   <% end %>
 
   <% if params[:personal] == "true" %>
+    <% if resource.avatar.present? %>
+      <%= image_tag resource.avatar.url(:thumb), alt: "Avatar" %>
+      <br><br>
+    <% else %>
+      <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+      <br><br>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :avatar %><br />
+      <%= f.file_field :avatar %>
+      <br>
+    </div>
+
     <% if resource.first_name.blank? %>
       <div class="field">
         <%= f.label :first_name %><br />

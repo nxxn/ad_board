@@ -37,89 +37,101 @@
 <div class="home_tasks_container">
   <!-- Task render start -->
   <div class="home_tasks_container_left">
-    <% @tasks.each do |task| %>
-      <% pending_offers = task.offers.where(status: "Pending").count %>
-      <% current_user_offers = task.offers.where(user_id: current_user.id).first if current_user %>
-      <div class="home_task">
-        <div class="home_task_left">
-          <div class="home_task_left_avatar">
-            <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+    <% if @tasks.count > 0 %>
+      <% @tasks.each do |task| %>
+        <% pending_offers = task.offers.where(status: "Pending").count %>
+        <% current_user_offers = task.offers.where(user_id: current_user.id).first if current_user %>
+        <div class="home_task">
+          <div class="home_task_left">
+            <div class="home_task_left_avatar">
+              <% if task.user.avatar.present? %>
+                <%= image_tag task.user.avatar.url(:thumb), alt: "Avatar" %>
+              <% else %>
+                <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+              <% end %>
+            </div>
+            <div class="home_task_right_user_info">
+              <div class='home_task_right_user_info_username'>
+                <%= task.user.username %>
+              </div>
+              <div class='home_task_right_user_info_level'>
+                LEVEL 2
+              </div>
+              <div class='home_task_right_user_info_rating'>
+                ***** (98)
+              </div>
+            </div>
           </div>
-          <div class="home_task_right_user_info">
-            <div class='home_task_right_user_info_username'>
-              <%= task.user.username %>
+          <div class="home_task_right">
+            <div class="home_task_right_bottom">
+              <div class="home_task_right_name">
+                <%= link_to task.name, "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
+              </div>
+              <div class="home_task_right_bottom_description">
+                <%= link_to task.description, "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
+              </div>
+              <div class="home_task_right_bottom_term">
+                <%= task.term %>
+              </div>
             </div>
-            <div class='home_task_right_user_info_level'>
-              LEVEL 2
+            <div class="home_task_right_bottom_price">
+              <div class="offers_count">
+                Offers: <%= pending_offers %> / <%= @max_offers_count_for_quest %>
+              </div>
+              <div class="home_task_price">
+                <%= task.estimated_price %> EG
+              </div>
+              <!-- Button trigger modal -->
+              <% if pending_offers < @max_offers_count_for_quest %>
+                <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
+                  <% if !current_user_offers %>
+                    <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal">
+                      Accept
+                    </button>
+                    <%= render partial: 'offers/new_offer_form', locals: { offer: @offer, task: task } %>
+                  <% else %>
+                    You already submitted offer
+                  <% end %>
+                <% elsif current_user && !current_user.profile_progress %>
+                  <%= link_to edit_user_registration_path(personal: "true") do %>
+                    <button type="button" class="make_offer_button modal_button">
+                      Accept
+                    </button>
+                  <% end %>
+                <% elsif !current_user %>
+                  <%= link_to "/sign_up" do %>
+                    <button type="button" class="make_offer_button modal_button">
+                      Accept
+                    </button>
+                  <% end %>
+                <% elsif current_user.profile_progress && !current_user.approved %>
+                  Wait while administrator will approve your account
+                <% end %>
+              <% elsif current_user && pending_offers == @max_offers_count_for_quest && current_user_offers %>
+                You already submitted offer
+              <% end %>
             </div>
-            <div class='home_task_right_user_info_rating'>
-              ***** (98)
+            <div class="home_task_game_name">
+              <% if task.game && task.quest_type %>
+                <%= task.game.name %> / <%= task.quest_type.name %>
+              <% end %>
+            </div>
+            <div class="home_task_play_methods">
+              <% if task.play_methods.count > 0 %>
+                <% task.play_methods.each do |method| %>
+                  <%= method.name %>
+                  <br>
+                <% end %>
+              <% end %>
             </div>
           </div>
         </div>
-        <div class="home_task_right">
-          <div class="home_task_right_bottom">
-            <div class="home_task_right_name">
-              <%= link_to task.name, "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
-            </div>
-            <div class="home_task_right_bottom_description">
-              <%= link_to task.description, "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
-            </div>
-            <div class="home_task_right_bottom_term">
-              <%= task.term %>
-            </div>
-          </div>
-          <div class="home_task_right_bottom_price">
-            <div class="offers_count">
-              Offers: <%= pending_offers %> / <%= @max_offers_count_for_quest %>
-            </div>
-            <div class="home_task_price">
-              <%= task.estimated_price %> €
-            </div>
-            <!-- Button trigger modal -->
-            <% if pending_offers < @max_offers_count_for_quest %>
-              <% if current_user && current_user.profile_progress && task.user_id != current_user.id %>
-                <% if !current_user_offers %>
-                  <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal">
-                    Make Offer
-                  </button>
-                  <%= render partial: 'offers/new_offer_form', locals: { offer: @offer, task: task } %>
-                <% else %>
-                  You already submitted offer
-                <% end %>
-              <% elsif current_user && !current_user.profile_progress %>
-                <%= link_to edit_user_registration_path(personal: "true") do %>
-                  <button type="button" class="make_offer_button modal_button">
-                    Make Offer
-                  </button>
-                <% end %>
-              <% elsif !current_user %>
-                <%= link_to "/sign_up" do %>
-                  <button type="button" class="make_offer_button modal_button">
-                    Make Offer
-                  </button>
-                <% end %>
-              <% end %>
-            <% elsif current_user && pending_offers == @max_offers_count_for_quest && current_user_offers %>
-              You already submitted offer
-            <% end %>
-          </div>
-          <div class="home_task_game_name">
-            <% if task.game && task.quest_type %>
-              <%= task.game.name %> / <%= task.quest_type.name %>
-            <% end %>
-          </div>
-          <div class="home_task_play_methods">
-            <% if task.play_methods.count > 0 %>
-              <% task.play_methods.each do |method| %>
-                <%= method.name %>
-                <br>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      <%= render partial: 'tasks/task_modal', locals: { task: task } %>
+        <%= render partial: 'tasks/task_modal', locals: { task: task } %>
+      <% end %>
+    <% else %>
+      <p>
+        There's no quests yet
+      </p>
     <% end %>
   </div>
   <!-- Task render end -->
@@ -131,7 +143,7 @@
       </div>
       <% @genres.each do |genre| %>
         <div class="sorting_content">
-          <%= genre.name %>
+          <%= link_to genre.name, root_url(genre: genre.name) %>
         </div>
       <% end %>
     </div>
@@ -141,7 +153,7 @@
       </div>
       <% @games.each do |game| %>
         <div class="sorting_content">
-          <%= game.name %>
+          <%= link_to game.name, root_url(game: game.name) %>
         </div>
       <% end %>
     </div>
@@ -151,7 +163,7 @@
       </div>
       <% @play_methods.each do |method| %>
         <div class="sorting_content">
-          <%= method.name %>
+          <%= link_to method.name, root_url(play_method: method.name) %>
         </div>
       <% end %>
     </div>

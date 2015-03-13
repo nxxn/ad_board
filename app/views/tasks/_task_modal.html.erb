@@ -46,12 +46,12 @@
           </div>
         <% end %>
 
-        <% if current_user && current_user.profile_progress && task.user_id != current_user.id %>
+        <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
           <% current_user_offers = task.offers.where(user_id: current_user.id).first %>
           <% if !current_user_offers %>
             <div class="make_offer_button_container">
               <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal">
-                Make Offer
+                Accept
               </button>
             </div>
           <% else %>
@@ -61,7 +61,7 @@
           <div class="make_offer_button_container">
             <%= link_to edit_user_registration_path(personal: "true") do %>
               <button type="button" class="make_offer_button modal_button">
-                Make Offer
+                Accept
               </button>
             <% end %>
           </div>
@@ -69,7 +69,7 @@
           <div class="make_offer_button_container">
             <%= link_to "/sign_up" do %>
               <button type="button" class="make_offer_button modal_button">
-                Make Offer
+                Accept
               </button>
             <% end %>
           </div>
