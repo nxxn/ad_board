@@ -17,6 +17,7 @@
     <% end %>
 
     <% if !offer.comment.blank? %>
+      <br>
       <b>Your comment:</b>
       <div class="task_show_offer_comment">
         <%= offer.comment %>
@@ -24,7 +25,7 @@
       <br><br>
     <% end %>
 
-    
+
     <b>Offer status:</b>
     <% if offer.status == "Pending" %>
       <span style="color:#337ab7;"><%= offer.status %></span>
