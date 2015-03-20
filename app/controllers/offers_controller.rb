@@ -34,7 +34,7 @@ class OffersController < ApplicationController
 
     @task = Task.find params[:task_id]
     @task.active = false
-    @task.in_progress = true
+    @task.status = "in_progress"
     @task.save
 
     @job = Job.create(user_id: @offer.user.id, task_id: @task.id, status: "Started", price: @offer.worker_price, started_at: Time.now)
@@ -49,7 +49,7 @@ class OffersController < ApplicationController
 
     @task = Task.find params[:task_id]
     @task.active = false
-    @task.in_progress = true
+    @task.status = "in_progress"
     @task.save
 
     @job = Job.create(user_id: @offer.user.id, task_id: @task.id, status: "Started", price: @offer.client_price, started_at: Time.now)
