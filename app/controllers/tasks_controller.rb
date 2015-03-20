@@ -2,6 +2,7 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    @offers = Offer.where("task_id = ? AND status != ?", @task.id, "Declined")
   end
 
   def edit

@@ -1,0 +1,51 @@
+<div class="user_public_info">
+  <div class="user_show_public_left">
+    <div class="user_show_public_left_avatar">
+      <% if @user.avatar.present? %>
+        <%= image_tag @user.avatar.url(:thumb), alt: "Avatar" %>
+      <% else %>
+        <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+      <% end %>
+    </div>
+    <div class="user_show_public_left_username">
+      <%= @user.first_name %> <%= @user.last_name %> (<%= @user.username %>) from <%= @user.country %>
+    </div>
+    <!-- <div class="user_show_public_left_personal">
+    </div> -->
+  </div>
+  <div class="user_show_public_right">
+    <div class="user_show_public_right_rating">
+      User rating
+    </div>
+    <div class="user_show_public_right_games">
+      User games
+    </div>
+    <div class="user_show_public_right_about">
+      User about me
+    </div>
+  </div>
+  <div class="user_show_public_completed_quests">
+    <div class="user_show_public_completed_quests_header">
+      Quests created by <%= @user.username %>
+    </div>
+    <% if @user_quests.count == 0 %>
+      <div class="user_show_public_completed_quests_nothing">
+        <%= @user.username %> have no quests
+      </div>
+    <% else %>
+      <%= render partial: 'user_quests', locals: { user_quests: @user_quests } %>
+    <% end %>
+  </div>
+  <div class="user_show_public_completed_quests">
+    <div class="user_show_public_completed_quests_header">
+      Quests completed by <%= @user.username %>
+    </div>
+    <% if @completed_quests.count == 0 %>
+      <div class="user_show_public_completed_quests_nothing">
+        <%= @user.username %> have not completed any quest
+      </div>
+    <% else %>
+      <%= render partial: 'completed_quests', locals: { completed_quests: @completed_quests } %>
+    <% end %>
+  </div>
+</div>

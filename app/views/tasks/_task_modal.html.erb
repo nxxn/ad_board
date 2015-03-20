@@ -2,50 +2,38 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <div class="modal_heading">
-          Quest name:
-        </div>
-        <div class="modal_text">
+
+        <div class="task_show_name modal_task_name">
           <%= task.name %>
         </div>
-        <div class="modal_heading">
-          Quest description:
-        </div>
-        <div class="modal_text">
+        <div class="task_show_description modal_task_description">
           <%= task.description %>
         </div>
-        <div class="modal_heading">
-          Quest price:
-        </div>
-        <div class="modal_text">
-          <%= task.estimated_price %>
-        </div>
-        <% if task.game && task.quest_type %>
-          <div class="modal_heading">
-            Quest game:
+        <div class="task_show_small_container modal_task_small_container">
+          <div class="task_show_name_price modal_task_price">
+            <%= task.estimated_price %> EG
           </div>
-          <div class="modal_text">
-            <%= task.game.name %>
-          </div>
-          <div class="modal_heading">
-            Quest type:
-          </div>
-          <div class="modal_text">
-            <%= task.quest_type.name %>
-          </div>
-        <% end %>
-        <% if task.play_methods.count > 0 %>
-          <div class="modal_heading">
-            Quest play methods:
-          </div>
-          <div class="modal_text">
-            <% task.play_methods.each do |method| %>
-              <%= method.name %>
-              <br>
+          <div class="task_show_game modal_task_game">
+            <% if task.game && task.quest_type %>
+              <%= task.game.name %> / <%= task.quest_type.name %>
             <% end %>
           </div>
-        <% end %>
-
+          <div class="task_show_play_method modal_task_play_method">
+            <div class="quests_play_methods_icons">
+              <% if task.play_methods.count > 0 %>
+                <% task.play_methods.each do |method| %>
+                  <% if method.name == "Selfplay" %>
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                  <% elsif method.name == "Account Sharing" %>
+                    <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                  <% elsif method.name == "LiveStream" %>
+                    <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
         <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
           <% current_user_offers = task.offers.where(user_id: current_user.id).first %>
           <% if !current_user_offers %>
@@ -54,8 +42,6 @@
                 Accept
               </button>
             </div>
-          <% else %>
-            You already submitted offer
           <% end %>
         <% elsif current_user && !current_user.profile_progress %>
           <div class="make_offer_button_container">

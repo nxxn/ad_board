@@ -1,57 +1,47 @@
 <div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <%= simple_form_for offer do |f| %>
     <div class="modal-dialog">
-      <div class="modal-content" style="padding-bottom: 30px;">
+      <div class="modal-content">
         <div class="modal-body">
-          <div class="modal_heading">
-            Quest name:
-          </div>
-          <div class="modal_text">
+          <div class="task_show_name modal_task_name">
             <%= task.name %>
           </div>
-          <div class="modal_heading">
-            Quest description:
-          </div>
-          <div class="modal_text">
+          <div class="task_show_description modal_task_description">
             <%= task.description %>
           </div>
-          <div class="modal_heading">
-            Quest price:
-          </div>
-          <div class="modal_text">
-            <%= task.estimated_price %>
-          </div>
-          <% if task.game && task.quest_type %>
-            <div class="modal_heading">
-              Quest game:
+          <div class="task_show_small_container modal_task_small_container">
+            <div class="task_show_name_price modal_task_price">
+              <%= task.estimated_price %> EG
             </div>
-            <div class="modal_text">
-              <%= task.game.name %>
-            </div>
-            <div class="modal_heading">
-              Quest type:
-            </div>
-            <div class="modal_text">
-              <%= task.quest_type.name %>
-            </div>
-          <% end %>
-          <% if task.play_methods.count > 0 %>
-            <div class="modal_heading">
-              Quest play methods:
-            </div>
-            <div class="modal_text">
-              <% task.play_methods.each do |method| %>
-                <%= method.name %>
-                <br>
+            <div class="task_show_game modal_task_game">
+              <% if task.game && task.quest_type %>
+                <%= task.game.name %> / <%= task.quest_type.name %>
               <% end %>
             </div>
-          <% end %>
+            <div class="task_show_play_method modal_task_play_method">
+              <div class="quests_play_methods_icons">
+                <% if task.play_methods.count > 0 %>
+                  <% task.play_methods.each do |method| %>
+                    <% if method.name == "Selfplay" %>
+                      <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    <% elsif method.name == "Account Sharing" %>
+                      <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                    <% elsif method.name == "LiveStream" %>
+                      <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
           <br><br>
           <%= f.hidden_field :task_id, value: task.id %>
           <%= f.input :worker_price, :input_html => { :value => task.estimated_price }, label: "Your price" %>
           <%= f.input :comment %>
-          <div class="submit_button_container">
-            <button type="submit" class="create_offer_button">Accept</button>
+          <div class="make_offer_button_container">
+            <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal">
+              Accept
+            </button>
           </div>
         </div>
       </div>

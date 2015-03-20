@@ -21,9 +21,9 @@ class OffersController < ApplicationController
     end
     @offer.update_attributes(params[:offer])
     if @offer.user_id == current_user.id
-      redirect_to offers_user_path(current_user)
+      redirect_to :back
     else
-      redirect_to tasks_user_path(current_user)
+      redirect_to :back
     end
   end
 
@@ -34,6 +34,7 @@ class OffersController < ApplicationController
 
     @task = Task.find params[:task_id]
     @task.active = false
+    @task.in_progress = true
     @task.save
 
     @job = Job.create(user_id: @offer.user.id, task_id: @task.id, status: "Started", price: @offer.worker_price, started_at: Time.now)
@@ -48,6 +49,7 @@ class OffersController < ApplicationController
 
     @task = Task.find params[:task_id]
     @task.active = false
+    @task.in_progress = true
     @task.save
 
     @job = Job.create(user_id: @offer.user.id, task_id: @task.id, status: "Started", price: @offer.client_price, started_at: Time.now)
@@ -60,7 +62,7 @@ class OffersController < ApplicationController
     @offer.status = "Declined"
     @offer.save
 
-    redirect_to tasks_user_path(current_user)
+    redirect_to :back
   end
 
   def counter
@@ -68,7 +70,7 @@ class OffersController < ApplicationController
     @offer.new_price = params[:new_price]
     @offer.save
 
-    redirect_to tasks_user_path(current_user)
+    redirect_to :back
   end
 
 end

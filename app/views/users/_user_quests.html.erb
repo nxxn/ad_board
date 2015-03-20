@@ -4,10 +4,10 @@
   <div class="user_show_public_comleted_quests_each">
     <div class="comleted_quests_each_left">
       <div class="home_task_right_name completed_quest_name">
-        <%= link_to truncate(task.name, length: 110, separator: ' '), task_path(task) %>
+        <%= link_to truncate(task.name, length: 110, separator: ' '), "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
       </div>
       <div class="home_task_right_bottom_description completed_quest_desc">
-        <%= link_to truncate(task.description, length: 110, separator: ' '), task_path(task) %>
+        <%= link_to truncate(task.description, length: 110, separator: ' '), "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
       </div>
       <div class="quests_play_methods_icons">
         <% if task.play_methods.count > 0 %>

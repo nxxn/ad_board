@@ -17,7 +17,11 @@
 <body>
   <div class="fullwidth_container">
     <div class="global_header">
-      <div class="container">
+      <% if controller_name == "home" %>
+        <div class="container main_page_large_container">
+      <% else %>
+        <div class="container">
+      <% end %>
         <div class="logo">
           <a href="/">EasyGame.com</a>
         </div>
@@ -51,7 +55,12 @@
         <% end %>
       </div>
     </div>
-    <div class="container">
+    <% if controller_name == "home" %>
+      <div class="container main_page_large_container">
+    <% else %>
+      <div class="container">
+    <% end %>
+      <%= render partial: 'layouts/top_buttons' %>
       <%= yield %>
     </div>
   </div>

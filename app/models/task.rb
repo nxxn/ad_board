@@ -6,7 +6,7 @@ class Task < ActiveRecord::Base
   belongs_to :quest_type
 
   has_many :offers, dependent: :destroy
-  has_many :jobs, dependent: :destroy
+  has_one :job, dependent: :destroy
 
   has_and_belongs_to_many :play_methods
 

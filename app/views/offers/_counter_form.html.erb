@@ -1,31 +1,25 @@
 <div class="modal fade" id="counterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <%= simple_form_for existing_offer do |f| %>
     <div class="modal-dialog">
-      <div class="modal-content" style="padding-bottom: 40px;">
+      <div class="modal-content">
         <div class="modal-body">
-          <b>Task name:</b>
-          <%= task.name %>
-          <br>
-          <b>Task description:</b>
-          <%= task.description %>
-          <br>
-          <b>Task price:</b>
-          <%= task.estimated_price %>
-          <br>
-          <b>Task term:</b>
-          <%= task.term %>
-          <br><br>
           <%= f.hidden_field :task_id, value: task.id %>
           <% if existing_offer.user_id == current_user.id %>
-            <b>Client offered price:</b>
-            <%= existing_offer.client_price %>
+            <b>Quest owner offered price:</b>
+            <span class="task_show_offer_price"><%= existing_offer.client_price %> EG</span>
             <%= f.input :worker_price, label: "Your price" %>
           <% else %>
-            <b>Worker offered price:</b>
-            <%= existing_offer.worker_price %>
+            <b><%= existing_offer.user.username %> offered price:</b>
+            <span class="task_show_offer_price"><%= existing_offer.worker_price %> EG</span>
             <%= f.input :client_price, label: "Your price" %>
           <% end %>
-          <button type="submit" class="create_offer_button" style="margin-top:10px;">Accept</button>
+          <div class="make_offer_button_container">
+            <%= link_to edit_user_registration_path(personal: "true") do %>
+              <button type="button" class="make_offer_button modal_button">
+                Accept
+              </button>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

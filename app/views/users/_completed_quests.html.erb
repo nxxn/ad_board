@@ -1,13 +1,13 @@
-<% user_quests.each do |task| %>
+<% completed_quests.each do |task| %>
   <% pending_offers = task.offers.where(status: "Pending").count %>
   <% current_user_offers = task.offers.where(user_id: current_user.id).first if current_user %>
   <div class="user_show_public_comleted_quests_each">
     <div class="comleted_quests_each_left">
       <div class="home_task_right_name completed_quest_name">
-        <%= link_to truncate(task.name, length: 110, separator: ' '), task_path(task) %>
+        <%= link_to truncate(task.name, length: 110, separator: ' '), "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
       </div>
       <div class="home_task_right_bottom_description completed_quest_desc">
-        <%= link_to truncate(task.description, length: 110, separator: ' '), task_path(task) %>
+        <%= link_to truncate(task.description, length: 110, separator: ' '), "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
       </div>
       <div class="quests_play_methods_icons">
         <% if task.play_methods.count > 0 %>
@@ -29,13 +29,12 @@
       </div>
     </div>
     <div class="comleted_quests_each_right">
-      <div class="offers_count">
+      <!-- <div class="offers_count">
         Offers: <%= pending_offers %> / <%= @max_offers_count_for_quest %>
       </div>
       <div class="home_task_price quests_price">
         <%= task.estimated_price %> EG
       </div>
-      <!-- Button trigger modal -->
       <% if pending_offers < @max_offers_count_for_quest %>
         <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
           <% if !current_user_offers %>
@@ -75,7 +74,7 @@
         <div class="already_submitted">
           You already submitted offer
         </div>
-      <% end %>
+      <% end %> -->
     </div>
   </div>
 <% end %>

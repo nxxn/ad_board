@@ -1,110 +1,107 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="user_edit_form">
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= devise_error_messages! %>
 
-  <p class="error_message"><%= flash[:error] %></p>
+    <p class="error_message"><%= flash[:error] %></p>
 
-  <% if params[:email] == "true" %>
-    <div class="field">
-      <%= f.label :current_email %><br />
-      <%= f.email_field :current_email %>
-    </div>
+    <% if params[:email] == "true" %>
+      <div class="field">
+        <%= f.label :current_email %><br />
+        <%= f.email_field :current_email %>
+      </div>
 
-    <div class="field">
-      <%= f.label :new_email %><br />
-      <%= f.email_field :new_email %>
-    </div>
-  <% end %>
-
-  <% if resource.is_admin? %>
-    <div class="field">
-      <%= f.label :username %><br />
-      <%= f.text_field :username %>
-    </div>
-    <br>
-  <% end %>
-
-  <% if params[:personal] == "true" %>
-    <% if resource.avatar.present? %>
-      <%= image_tag resource.avatar.url(:thumb), alt: "Avatar" %>
-      <br><br>
-    <% else %>
-      <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
-      <br><br>
+      <div class="field">
+        <%= f.label :new_email %><br />
+        <%= f.email_field :new_email %>
+      </div>
     <% end %>
 
-    <div class="field">
-      <%= f.label :avatar %><br />
-      <%= f.file_field :avatar %>
+    <% if resource.is_admin? %>
+      <div class="field">
+        <%= f.label :username %><br />
+        <%= f.text_field :username %>
+      </div>
       <br>
-    </div>
+    <% end %>
 
-    <% if resource.first_name.blank? %>
+    <% if params[:personal] == "true" %>
+      <% if resource.avatar.present? %>
+        <%= image_tag resource.avatar.url(:thumb), alt: "Avatar" %>
+      <% else %>
+        <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+      <% end %>
+
       <div class="field">
-        <%= f.label :first_name %><br />
-        <%= f.text_field :first_name %>
+        <%= f.label :avatar %><br />
+        <%= f.file_field :avatar %>
+      </div>
+
+      <% if resource.first_name.blank? %>
+        <div class="field">
+          <%= f.label :first_name %><br />
+          <%= f.text_field :first_name %>
+        </div>
+      <% end %>
+
+      <% if resource.last_name.blank? %>
+        <div class="field">
+          <%= f.label :last_name %><br />
+          <%= f.text_field :last_name %>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :street %><br />
+        <%= f.text_field :street %>
+      </div>
+
+      <div class="field">
+        <%= f.label :post_index %><br />
+        <%= f.text_field :post_index %>
+      </div>
+
+      <div class="field">
+        <%= f.label :town %><br />
+        <%= f.text_field :town %>
+      </div>
+
+      <div class="field">
+        <%= f.label :country %><br />
+        <%= f.text_field :country %>
+      </div>
+
+      <div class="field">
+        <%= f.label :phone %><br />
+        <%= f.text_field :phone %>
       </div>
     <% end %>
 
-    <% if resource.last_name.blank? %>
+    <% if params[:password] == "true" %>
       <div class="field">
-        <%= f.label :last_name %><br />
-        <%= f.text_field :last_name %>
+        <%= f.label :current_password %><br />
+        <%= f.password_field :current_password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %><br />
+        <%= f.password_field :password, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
       </div>
     <% end %>
 
-    <div class="field">
-      <%= f.label :street %><br />
-      <%= f.text_field :street %>
-    </div>
-
-    <div class="field">
-      <%= f.label :post_index %><br />
-      <%= f.text_field :post_index %>
-    </div>
-
-    <div class="field">
-      <%= f.label :town %><br />
-      <%= f.text_field :town %>
-    </div>
-
-    <div class="field">
-      <%= f.label :country %><br />
-      <%= f.text_field :country %>
-    </div>
-
-    <div class="field">
-      <%= f.label :phone %><br />
-      <%= f.text_field :phone %>
-    </div>
+    <br />
+    <button type="submit" class="btn btn-success">Update</button>
   <% end %>
 
-  <% if params[:password] == "true" %>
-    <div class="field">
-      <%= f.label :current_password %><br />
-      <%= f.password_field :current_password, autocomplete: "off" %>
-    </div>
+  <!-- <h3>Cancel my account</h3>
 
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, autocomplete: "off" %>
-    </div>
-
-    <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off" %>
-    </div>
-  <% end %>
-
+  <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p> -->
   <br />
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<!-- <h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p> -->
-<br />
-<%= link_to "Back", :back %>
+  <%= link_to "Back", :back, class: "btn btn-default" %>
+</div>

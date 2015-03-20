@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150313002215) do
+ActiveRecord::Schema.define(:version => 20150317221044) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -83,6 +83,14 @@ ActiveRecord::Schema.define(:version => 20150313002215) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "reviews", :force => true do |t|
+    t.integer  "from"
+    t.integer  "user_id"
+    t.boolean  "positive"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "settings", :force => true do |t|
     t.string   "key"
     t.text     "value"
@@ -98,10 +106,11 @@ ActiveRecord::Schema.define(:version => 20150313002215) do
     t.float    "estimated_price", :default => 0.0
     t.string   "term",            :default => ""
     t.boolean  "active",          :default => true
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.integer  "game_id"
     t.integer  "quest_type_id"
+    t.string   "status",          :default => "created"
   end
 
   create_table "users", :force => true do |t|
@@ -136,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20150313002215) do
     t.datetime "avatar_updated_at"
     t.boolean  "approved",                                             :default => true
     t.decimal  "balance",                :precision => 8, :scale => 2, :default => 0.0
+    t.integer  "rating",                                               :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

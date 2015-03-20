@@ -3,17 +3,33 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find params[:id]
+    @task = Task.new
+    @offer = Offer.new
+    @completed_quests = Job.where(user_id: @user.id, status: "Paid")
+    @user_quests = Task.where(user_id: @user.id, active: true).includes(:game, :quest_type, :play_methods)
   end
 
   def tasks
     @user = User.find params[:id]
-    @tasks = Task.where(user_id: @user.id).includes(:user, :game, :quest_type, :play_methods)
+    if params[:status] == "in_progress_by_me"
+      @jobs = Job.where(user_id: @user.id)
+      @tasks = []
+      @jobs.each {|j| @tasks.push(j.task.includes(:game, :quest_type, :play_methods)) if j.task.status == "in_progress" }
+    elsif params[:status] == "in_progress_for_me"
+      @tasks = Task.where(user_id: @user.id, status: "in_progress").includes(:game, :quest_type, :play_methods)
+    elsif params[:status] == "completed"
+      @tasks = Task.where(user_id: @user.id, status: "completed").includes(:game, :quest_type, :play_methods)
+    elsif params[:status] == "paid"
+      @tasks = Task.where(user_id: @user.id, status: "paid").includes(:game, :quest_type, :play_methods)
+    else
+      @tasks = Task.where(user_id: @user.id, status: "created").includes(:game, :quest_type, :play_methods)
+    end
     @task = Task.new
   end
 
   def offers
     @user = User.find params[:id]
-    @offers = Offer.where(user_id: @user.id).includes(:user, :task => [:user])
+    @offers = Offer.where(user_id: @user.id).includes(:user, :task => [:user, :game, :quest_type, :play_methods])
   end
 
   def jobs
@@ -38,12 +54,10 @@ class UsersController < ApplicationController
   end
 
   def hook
-    params.permit! # Permit all Paypal input params
     ap params
     status = params[:payment_status]
     if status == "Completed"
-      @registration = Registration.find params[:invoice]
-      @registration.update_attributes notification_params: params, status: status, transaction_id: params[:txn_id], purchased_at: Time.now
+      ap "true"
     end
     render nothing: true
   end

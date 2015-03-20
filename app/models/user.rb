@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :authentication_keys => [:login]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :first_name, :last_name, :street, :post_index, :town, :country, :phone, :login, :current_email, :new_email, :current_password, :avatar, :is_admin, :approved
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :username, :first_name, :last_name, :street, :post_index, :town, :country, :phone, :login, :current_email, :new_email, :current_password, :avatar, :is_admin, :approved, :balance, :rating
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
@@ -14,10 +14,11 @@ class User < ActiveRecord::Base
   has_many :tasks, dependent: :destroy
   has_many :offers, dependent: :destroy
   has_many :jobs, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   has_attached_file :avatar,
                     :storage => :s3,
-                    :styles => { :thumb => "100x1000>"},
+                    :styles => { :thumb => "100x125#"},
                     :convert_options => {:thumb => '-strip -interlace plane -quality 90'},
                     :path => "user_avatars/:id.:style.:extension"
 
@@ -75,7 +76,6 @@ class User < ActiveRecord::Base
     country.blank?
   end
 
-  serialize :notification_params, Hash
   def paypal_url(return_path)
     values = {
         business: "n.gnotov-facilitator@gmail.com",

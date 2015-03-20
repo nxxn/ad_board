@@ -1,76 +1,14 @@
-<div class="user_tasks_buttons">
-  <!-- Button trigger modal -->
-  <button type="button" class="new_task_button" data-toggle="modal" data-target="#taskModal">
-    + New quest
-  </button>
-  <%= render partial: 'tasks/new_task_form', locals: { task: @task } %>
-</div>
+<ul class="main_page_links_list">
+  <li><%= link_to "All Quests", tasks_user_path(current_user), class: "#{!params[:status] ? "active" : "" }" %></li>
+  <li><%= link_to "In progress by me Quests", tasks_user_path(current_user, status: "in_progress_by_me"), class: "#{params[:status] == "in_progress_by_me" ? "active" : "" }" %></li>
+  <li><%= link_to "In progress for me Quests", tasks_user_path(current_user, status: "in_progress_for_me"), class: "#{params[:status] == "in_progress_for_me" ? "active" : "" }" %></li>
+  <li><%= link_to "Completed Quests", tasks_user_path(current_user, status: "completed"), class: "#{params[:status] == "completed" ? "active" : "" }" %></li>
+</ul>
 
-<div class="home_tasks_container">
-  <% @tasks.each do |task| %>
-    <% pending_offers = task.offers.where(status: "Pending").count %>
-    <div class="home_task">
-      <div class="home_task_left">
-        <div class="home_task_left_avatar">
-          <% if task.user.avatar.present? %>
-            <%= image_tag task.user.avatar.url(:thumb), alt: "Avatar" %>
-          <% else %>
-            <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
-          <% end %>
-        </div>
-        <div class="home_task_right_user_info">
-          <div class='home_task_right_user_info_username'>
-            <%= task.user.username %>
-          </div>
-          <div class='home_task_right_user_info_level'>
-            LEVEL 2
-          </div>
-          <div class='home_task_right_user_info_rating'>
-            ***** (98)
-          </div>
-        </div>
-      </div>
-      <div class="home_task_right">
-        <div class="home_task_right_bottom">
-          <div class="home_task_right_name">
-            <%= link_to task.name, task_path(task) %>
-          </div>
-          <div class="home_task_right_bottom_description">
-            <%= link_to task.description, task_path(task) %>
-          </div>
-          <div class="home_task_right_bottom_term">
-            <%= task.term %>
-          </div>
-        </div>
-        <div class="home_task_right_bottom_price">
-          <div class="offers_count">
-            Offers: <%= pending_offers %> / <%= @max_offers_count_for_quest %>
-          </div>
-          <div class="home_task_price">
-            <%= task.estimated_price %> EG
-          </div>
-          <% if current_user && task.user_id == current_user.id %>
-            <% if task.offers.count == 0 %>
-              <%= link_to "Edit task", "#", :data => {toggle: "modal", target: "#taskEditModal"} %>
-              <%= render partial: 'tasks/update_task_form', locals: { task: task } %>
-            <% end %>
-            <%= link_to 'Destroy task', task, :method => :delete, :data => { :confirm => 'Are you sure?' } %>
-          <% end %>
-        </div>
-        <div class="home_task_game_name">
-          <% if task.game && task.quest_type %>
-            <%= task.game.name %> / <%= task.quest_type.name %>
-          <% end %>
-        </div>
-        <div class="home_task_play_methods">
-          <% if task.play_methods.count > 0 %>
-            <% task.play_methods.each do |method| %>
-              <%= method.name %>
-              <br>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
+<% if @tasks.count == 0 %>
+  <div class="user_show_public_completed_quests_nothing">
+    You have no quests
+  </div>
+<% else %>
+  <%= render partial: 'tasks/tasks_list', locals: { user_quests: @tasks } %>
+<% end %>

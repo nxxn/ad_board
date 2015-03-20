@@ -1,0 +1,107 @@
+<div class="user_show_left_part">
+
+  <div class="user_show_main_panel">
+    <div class="user_show_containter">
+      <div class="home_task_left">
+        <div class="home_task_left_avatar">
+          <% if user.avatar.present? %>
+            <%= image_tag user.avatar.url(:thumb), alt: "Avatar" %>
+          <% else %>
+            <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+          <% end %>
+        </div>
+        <div class="home_task_right_user_info">
+          <div class='home_task_right_user_info_username'>
+            <%= user.username %>
+          </div>
+          <!-- <div class='home_task_right_user_info_level'>
+            LEVEL 2
+          </div> -->
+          <div class='home_task_right_user_info_rating'>
+            <% if user.rating == 0 %>
+              No feedback yet
+            <% else %>
+              <%= user.rating %>% positive feedback
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="user_show_personal">
+        <% if user.no_first_name? %>
+          <span class="not-completed">Fill your first name</span>
+        <% else %>
+          <%= user.first_name %>
+        <% end %>
+        <% if user.no_last_name? %>
+          <span class="not-completed">Fill your last name</span>
+        <% else %>
+          <%= user.last_name %>
+        <% end %>
+        <br>
+        <% if user.no_street? %>
+          <span class="not-completed">Fill your street</span>,
+        <% else %>
+          <%= user.street %>,
+        <% end %>
+        <% if user.no_town? %>
+          <span class="not-completed">Fill your town</span>,
+        <% else %>
+          <%= user.town %>,
+        <% end %>
+        <% if user.no_country? %>
+          <span class="not-completed">Fill your country</span>,
+        <% else %>
+          <%= user.country %>,
+        <% end %>
+        <% if user.no_post_index? %>
+          <span class="not-completed">Fill your post index</span>
+        <% else %>
+          <%= user.post_index %>
+        <% end %>
+        <br>
+        <%= user.email %>
+        <br>
+        <div class="user_show_personal_links">
+          <%= link_to "Change email", edit_user_registration_path(email: "true"), style: "color: #337ab7;" %> |
+          <%= link_to "Change password", edit_user_registration_path(password: "true"), style: "color: #6f6329;" %> |
+          <%= link_to "Change personal data", edit_user_registration_path(personal: "true"), style: "color: green;" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-fields">
+    <% if user.profile_progress %>
+      <br>
+      <p style="color: green;">
+        Ur good to go!
+      </p>
+    <% else %>
+      <ul>
+        <% if user.no_first_name? %>
+          <li><span class="not-completed">Fill your first name</span></li>
+        <% end %>
+        <% if user.no_last_name? %>
+          <li><span class="not-completed">Fill your last name</span></li>
+        <% end %>
+        <% if user.no_street? %>
+          <li><span class="not-completed">Fill your street</span></li>
+        <% end %>
+        <% if user.no_town? %>
+          <li><span class="not-completed">Fill your town</span></li>
+        <% end %>
+        <% if user.no_country? %>
+          <li><span class="not-completed">Fill your country</span></li>
+        <% end %>
+        <% if user.no_post_index? %>
+          <li><span class="not-completed">Fill your post index</span></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% if !user.approved %>
+      Wait while administrator will approve your account
+      <br>
+      <br>
+    <% end %>
+  </div>
+</div>

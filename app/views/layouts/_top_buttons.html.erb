@@ -1,0 +1,39 @@
+<div class="main_page_buttons">
+  <% if current_user && current_user.profile_progress %>
+    <!-- Button trigger modal -->
+    <button type="button" class="new_task_button" data-toggle="modal" data-target="#taskModal">
+      + New quest
+    </button>
+    <%= render partial: 'tasks/new_task_form', locals: { task: @task } %>
+
+    <%= link_to tasks_user_path(current_user) do %>
+      <button type="button" class="all_tasks_button">
+        My Quests
+      </button>
+    <% end %>
+
+    <%= link_to offers_user_path(current_user) do %>
+      <button type="button" class="hot_offers_button">
+        My Sent Offers
+      </button>
+    <% end %>
+
+    <!-- <%= link_to current_user.paypal_url(user_url(current_user.id))  %> -->
+    <%= link_to '#' do %>
+      <button type="button" class="virtual_currency_button">
+        Add EG
+      </button>
+    <% end %>
+
+  <% elsif current_user && !current_user.profile_progress %>
+    <%= link_to edit_user_registration_path(personal: "true") do %>
+      <button type="button" class="new_task_button">+ New quest</button>
+    <% end %>
+  <% end %>
+  <!-- <button type="button" class="gamecodes_button" data-toggle="modal" data-target="#myModal">
+    <a href="#">Gamecodes</a>
+  </button>
+  <button type="button" class="virtual_currency_button" data-toggle="modal" data-target="#myModal">
+    <a href="#">Virtual Currency</a>
+  </button> -->
+</div>
