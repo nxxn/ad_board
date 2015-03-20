@@ -38,7 +38,7 @@
           <% current_user_offers = task.offers.where(user_id: current_user.id).first %>
           <% if !current_user_offers %>
             <div class="make_offer_button_container">
-              <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal">
+              <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal-<%= task.id %>">
                 Accept
               </button>
             </div>
