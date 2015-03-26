@@ -951,6 +951,20 @@ button:focus {outline:0;}
   margin: 20px 0 0 0;
 }
 
+.complete_confirm_quest_link_container a {
+  color: green;
+}
+
+.complete_confirm_quest_link_container a:hover, .complete_confirm_quest_link_container a:focus {
+  color: rgb(0, 178, 0);
+}
+
+.awaiting_quest_confirmation {
+  padding: 0 0 0 80px;
+  margin: 20px 0 0 0;
+  color: #6f6329;
+}
+
 /* Task#show end */
 
 /* User#offers start */

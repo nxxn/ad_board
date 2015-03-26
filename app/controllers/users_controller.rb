@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def tasks
     @user = User.find params[:id]
     if params[:status] == "in_progress_by_me"
-      @tasks = Task.where(worker_id: @user.id, status: "not completed").includes(:game, :quest_type, :play_methods)
+      @tasks = Task.where("worker_id = ? AND (status = ? OR status =?)", @user.id, "not completed", "not confirmed").includes(:game, :quest_type, :play_methods, :user, :worker)
     elsif params[:status] == "in_progress_for_me"
       @tasks = Task.where(user_id: @user.id, status: "not completed").includes(:game, :quest_type, :play_methods)
     elsif params[:status] == "completed_by_me"

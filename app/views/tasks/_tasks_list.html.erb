@@ -92,6 +92,10 @@
         <div class="complete_confirm_quest_link_container">
           <%= link_to "Confirm quest", confirm_task_path(task) %>
         </div>
+      <% elsif task.status == "not confirmed" && current_user == task.worker %>
+        <div class="awaiting_quest_confirmation">
+          Awaiting confrimation
+        </div>
       <% elsif task.status == "completed" %>
         <% if current_user == task.user && task.client_feedback == false %>
           <div class="leave_feedback_for_client_container">
