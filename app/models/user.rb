@@ -76,6 +76,13 @@ class User < ActiveRecord::Base
     country.blank?
   end
 
+  def update_rating
+    positive_reviews_count = Review.where(user_id: id, positive: true).count
+    negative_reviews_count = Review.where(user_id: id, positive: false).count
+    user_total_revews_count = positive_reviews_count + negative_reviews_count * 2
+    self.update_attribute(:rating, positive_reviews_count * 100 / user_total_revews_count)
+  end
+
   def paypal_url(return_path)
     values = {
         business: "n.gnotov-facilitator@gmail.com",

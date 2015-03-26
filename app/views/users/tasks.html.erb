@@ -2,7 +2,8 @@
   <li><%= link_to "All Quests", tasks_user_path(current_user), class: "#{!params[:status] ? "active" : "" }" %></li>
   <li><%= link_to "In progress by me Quests", tasks_user_path(current_user, status: "in_progress_by_me"), class: "#{params[:status] == "in_progress_by_me" ? "active" : "" }" %></li>
   <li><%= link_to "In progress for me Quests", tasks_user_path(current_user, status: "in_progress_for_me"), class: "#{params[:status] == "in_progress_for_me" ? "active" : "" }" %></li>
-  <li><%= link_to "Completed Quests", tasks_user_path(current_user, status: "completed"), class: "#{params[:status] == "completed" ? "active" : "" }" %></li>
+  <li><%= link_to "Completed by me Quests", tasks_user_path(current_user, status: "completed_by_me"), class: "#{params[:status] == "completed_by_me" ? "active" : "" }" %></li>
+  <li><%= link_to "Completed for me Quests", tasks_user_path(current_user, status: "completed_for_me"), class: "#{params[:status] == "completed_for_me" ? "active" : "" }" %></li>
 </ul>
 
 <% if @tasks.count == 0 %>

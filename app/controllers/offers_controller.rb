@@ -34,10 +34,13 @@ class OffersController < ApplicationController
 
     @task = Task.find params[:task_id]
     @task.active = false
-    @task.status = "in_progress"
+    @task.status = "not completed"
+    @task.worker_id = @offer.user.id
+    @task.final_price = @offer.worker_price
     @task.save
-
-    @job = Job.create(user_id: @offer.user.id, task_id: @task.id, status: "Started", price: @offer.worker_price, started_at: Time.now)
+    @user = @task.user
+    @user.balance = @user.balance - @task.final_price
+    @user.save
 
     redirect_to tasks_user_path(current_user)
   end
@@ -49,10 +52,13 @@ class OffersController < ApplicationController
 
     @task = Task.find params[:task_id]
     @task.active = false
-    @task.status = "in_progress"
+    @task.status = "not completed"
+    @task.worker_id = @offer.user.id
+    @task.final_price = @offer.client_price
     @task.save
-
-    @job = Job.create(user_id: @offer.user.id, task_id: @task.id, status: "Started", price: @offer.client_price, started_at: Time.now)
+    @user = @task.user
+    @user.balance = @user.balance - @task.final_price
+    @user.save
 
     redirect_to tasks_user_path(current_user)
   end

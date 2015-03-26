@@ -30,52 +30,82 @@
     </div>
     <div class="comleted_quests_each_right">
       <div class="offers_count">
-        Offers: <%= pending_offers %> / <%= @max_offers_count_for_quest %>
+        <% unless task.status != "created" %>
+          Offers: <%= pending_offers %> / <%= @max_offers_count_for_quest %>
+        <% end %>
       </div>
       <div class="home_task_price quests_price">
-        <%= task.estimated_price %> EG
+        <% if task.final_price > 0 %>
+          <%= task.final_price %> EG
+        <% else %>
+          <%= task.estimated_price %> EG
+        <% end %>
       </div>
-      <!-- Button trigger modal -->
-      <% if pending_offers < @max_offers_count_for_quest %>
-        <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
-          <% if !current_user_offers %>
+
+      <% if task.status == "created" %>
+        <!-- Button trigger modal -->
+        <% if pending_offers < @max_offers_count_for_quest %>
+          <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
+            <% if !current_user_offers %>
+              <div class="accept_button">
+                <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal">
+                  Accept
+                </button>
+              </div>
+              <%= render partial: 'offers/new_offer_form', locals: { offer: @offer, task: task } %>
+            <% else %>
+              <div class="already_submitted">
+                You already submitted offer
+              </div>
+            <% end %>
+          <% elsif current_user && !current_user.profile_progress %>
             <div class="accept_button">
-              <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal">
-                Accept
-              </button>
+              <%= link_to edit_user_registration_path(personal: "true") do %>
+                <button type="button" class="make_offer_button modal_button">
+                  Accept
+                </button>
+              <% end %>
             </div>
-            <%= render partial: 'offers/new_offer_form', locals: { offer: @offer, task: task } %>
-          <% else %>
-            <div class="already_submitted">
-              You already submitted offer
+          <% elsif !current_user %>
+            <div class="accept_button">
+              <%= link_to "/sign_up" do %>
+                <button type="button" class="make_offer_button modal_button">
+                  Accept
+                </button>
+              <% end %>
+            </div>
+          <% elsif current_user.profile_progress && !current_user.approved %>
+            <div class="waiting_approve">
+              Waiting for account approve
             </div>
           <% end %>
-        <% elsif current_user && !current_user.profile_progress %>
-          <div class="accept_button">
-            <%= link_to edit_user_registration_path(personal: "true") do %>
-              <button type="button" class="make_offer_button modal_button">
-                Accept
-              </button>
-            <% end %>
-          </div>
-        <% elsif !current_user %>
-          <div class="accept_button">
-            <%= link_to "/sign_up" do %>
-              <button type="button" class="make_offer_button modal_button">
-                Accept
-              </button>
-            <% end %>
-          </div>
-        <% elsif current_user.profile_progress && !current_user.approved %>
-          <div class="waiting_approve">
-            Waiting for account approve
+        <% elsif current_user && pending_offers == @max_offers_count_for_quest && current_user_offers %>
+          <div class="already_submitted">
+            You already submitted offer
           </div>
         <% end %>
-      <% elsif current_user && pending_offers == @max_offers_count_for_quest && current_user_offers %>
-        <div class="already_submitted">
-          You already submitted offer
+      <% elsif task.status == "not completed" %>
+        <div class="complete_confirm_quest_link_container">
+          <%= link_to "Complete quest", complete_task_path(task) %>
         </div>
+      <% elsif task.status == "not confirmed" && current_user == task.user %>
+        <div class="complete_confirm_quest_link_container">
+          <%= link_to "Confirm quest", confirm_task_path(task) %>
+        </div>
+      <% elsif task.status == "completed" %>
+        <% if current_user == task.user && task.client_feedback == false %>
+          <div class="leave_feedback_for_client_container">
+            <%= link_to "Leave a feedback for worker", "#", :data => {toggle: "modal", target: "#reviewModal"} %>
+          </div>
+        <% elsif current_user == task.worker && task.worker_feedback == false %>
+          <div class="leave_feedback_for_owner_container">
+            <%= link_to "Leave a feedback for quest owner", "#", :data => {toggle: "modal", target: "#reviewModal"} %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
+  <% if task.status == "completed" && (task.client_feedback == false || task.worker_feedback == false) %>
+    <%= render partial: 'reviews/new_review_form', locals: { review: @review, task: task } %>
+  <% end %>
 <% end %>

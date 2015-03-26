@@ -1,0 +1,21 @@
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <%= simple_form_for review, url: leave_feedback_task_path(task) do |f| %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <%= f.input :comment %>
+          <div class="leave_feedback_radio_container">
+            <input class="leave_feedback_radio" id="review_positive_true" name="review[positive]" type="radio" value="true" checked="checked">
+            <label class="collection_radio_buttons" for="review_positive_true">Positive</label>
+            <br>
+            <input class="leave_feedback_radio" id="review_positive_false" name="review[positive]" type="radio" value="false">
+            <label class="collection_radio_buttons" for="review_positive_false">Negative</label>
+          </div>
+          <div class="make_offer_button_container">
+            <button type="submit" class="leave_feedback_button">Leave Feedback</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

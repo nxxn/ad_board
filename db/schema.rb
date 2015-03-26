@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150317221044) do
+ActiveRecord::Schema.define(:version => 20150323231313) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -87,8 +87,10 @@ ActiveRecord::Schema.define(:version => 20150317221044) do
     t.integer  "from"
     t.integer  "user_id"
     t.boolean  "positive"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "task_id"
+    t.text     "comment",    :default => ""
   end
 
   create_table "settings", :force => true do |t|
@@ -106,11 +108,16 @@ ActiveRecord::Schema.define(:version => 20150317221044) do
     t.float    "estimated_price", :default => 0.0
     t.string   "term",            :default => ""
     t.boolean  "active",          :default => true
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.integer  "game_id"
     t.integer  "quest_type_id"
     t.string   "status",          :default => "created"
+    t.integer  "worker_id"
+    t.float    "final_price",     :default => 0.0
+    t.string   "payment_status",  :default => "not paid"
+    t.boolean  "client_feedback", :default => false
+    t.boolean  "worker_feedback", :default => false
   end
 
   create_table "users", :force => true do |t|

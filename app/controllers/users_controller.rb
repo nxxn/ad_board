@@ -5,26 +5,25 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     @task = Task.new
     @offer = Offer.new
-    @completed_quests = Job.where(user_id: @user.id, status: "Paid")
+    @completed_quests = Task.where(worker_id: @user.id, status: "completed")
     @user_quests = Task.where(user_id: @user.id, active: true).includes(:game, :quest_type, :play_methods)
   end
 
   def tasks
     @user = User.find params[:id]
     if params[:status] == "in_progress_by_me"
-      @jobs = Job.where(user_id: @user.id)
-      @tasks = []
-      @jobs.each {|j| @tasks.push(j.task.includes(:game, :quest_type, :play_methods)) if j.task.status == "in_progress" }
+      @tasks = Task.where(worker_id: @user.id, status: "not completed").includes(:game, :quest_type, :play_methods)
     elsif params[:status] == "in_progress_for_me"
-      @tasks = Task.where(user_id: @user.id, status: "in_progress").includes(:game, :quest_type, :play_methods)
-    elsif params[:status] == "completed"
-      @tasks = Task.where(user_id: @user.id, status: "completed").includes(:game, :quest_type, :play_methods)
-    elsif params[:status] == "paid"
-      @tasks = Task.where(user_id: @user.id, status: "paid").includes(:game, :quest_type, :play_methods)
+      @tasks = Task.where(user_id: @user.id, status: "not completed").includes(:game, :quest_type, :play_methods)
+    elsif params[:status] == "completed_by_me"
+      @tasks = Task.where(worker_id: @user.id, status: "completed").includes(:game, :quest_type, :play_methods, :user, :worker)
+    elsif params[:status] == "completed_for_me"
+      @tasks = Task.where("user_id = ? AND (status = ? OR status =?)", @user.id, "completed", "not confirmed").includes(:game, :quest_type, :play_methods, :user, :worker)
     else
       @tasks = Task.where(user_id: @user.id, status: "created").includes(:game, :quest_type, :play_methods)
     end
     @task = Task.new
+    @review = Review.new
   end
 
   def offers

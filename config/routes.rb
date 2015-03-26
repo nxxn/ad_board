@@ -23,7 +23,13 @@ AdBoard::Application.routes.draw do
   post "/users/:id" => "users#show"
   post "/hook" => "users#hook"
 
-  resources :tasks, :path => '/quests'
+  resources :tasks, :path => '/quests' do
+    member do
+      get :complete
+      get :confirm
+      post :leave_feedback
+    end
+  end
 
   resources :offers do
     member do

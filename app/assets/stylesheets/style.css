@@ -443,6 +443,10 @@ button:focus {outline:0;}
   color: #b7d2f0;
 }
 
+.modal-dialog .modal-content input.boolean {
+  width: 24px;
+}
+
 .modal-dialog .modal-content textarea {
   background-color: #141d26;
   border-radius: 0;
@@ -920,6 +924,31 @@ button:focus {outline:0;}
 
 .offers_block_links a:hover {
   /*text-decoration: none;*/
+}
+
+.leave_feedback_button {
+  background-color: #0b5e18;
+}
+
+.leave_feedback_radio_container {
+  margin: 20px 0 0 0;
+}
+
+.leave_feedback_radio_container .leave_feedback_radio {
+  width: 18px !important;
+}
+
+.leave_feedback_for_client_container {
+  padding: 0 0 0 80px;
+}
+
+.leave_feedback_for_owner_container {
+  padding: 0 0 0 80px;
+}
+
+.complete_confirm_quest_link_container {
+  padding: 0 0 0 80px;
+  margin: 20px 0 0 0;
 }
 
 /* Task#show end */
