@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     elsif params[:status] == "completed_for_me"
       @tasks = Task.where("user_id = ? AND (status = ? OR status =?)", @user.id, "completed", "not confirmed").includes(:game, :quest_type, :play_methods, :user, :worker)
     else
-      @tasks = Task.where(user_id: @user.id).includes(:game, :quest_type, :play_methods, :user, :worker)
+      @tasks = Task.where("worker_id = ? OR user_id = ?", @user.id, @user.id).includes(:game, :quest_type, :play_methods, :user, :worker)
     end
     @review = Review.new
   end
