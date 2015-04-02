@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150323231313) do
+ActiveRecord::Schema.define(:version => 20150401184814) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -53,6 +53,16 @@ ActiveRecord::Schema.define(:version => 20150323231313) do
     t.datetime "updated_at",                  :null => false
   end
 
+  create_table "money_orders", :force => true do |t|
+    t.float    "amount"
+    t.integer  "user_id"
+    t.string   "payment_status"
+    t.integer  "task_id"
+    t.string   "invoice"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
   create_table "offers", :force => true do |t|
     t.integer  "user_id"
     t.integer  "task_id"
@@ -64,6 +74,15 @@ ActiveRecord::Schema.define(:version => 20150323231313) do
     t.integer  "worker_times", :default => 0
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+  end
+
+  create_table "payment_notifications", :force => true do |t|
+    t.text     "params"
+    t.integer  "money_order_id"
+    t.string   "status"
+    t.string   "transaction_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "play_methods", :force => true do |t|

@@ -17,7 +17,6 @@ class HomeController < ApplicationController
       @tasks = Task.where(active: true).includes(:user, :game, :quest_type, :play_methods).order('created_at DESC')
     end
 
-    @task = Task.new
     @offer = Offer.new
 
     @games = Game.all

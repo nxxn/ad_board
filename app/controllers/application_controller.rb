@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   def max_offers_count_for_quest
     @task = Task.new
+    @money_order = MoneyOrder.new
     @max_offers_count_for_quest = Setting.get_value("max_offers_count_for_quest").to_i
   end
 

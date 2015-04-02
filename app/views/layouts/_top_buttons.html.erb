@@ -18,12 +18,11 @@
       </button>
     <% end %>
 
-    <!-- <%= link_to current_user.paypal_url(user_url(current_user.id))  %> -->
-    <%= link_to '#' do %>
-      <button type="button" class="virtual_currency_button">
-        Add EG
-      </button>
-    <% end %>
+    <button type="button" class="virtual_currency_button" data-toggle="modal" data-target="#orderModal">
+      Add EG
+    </button>
+
+    <%= render partial: 'money_orders/new_money_order_form', locals: { order: @money_order } %>
 
   <% elsif current_user && !current_user.profile_progress %>
     <%= link_to edit_user_registration_path(personal: "true") do %>

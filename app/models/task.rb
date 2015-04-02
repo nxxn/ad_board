@@ -12,4 +12,5 @@ class Task < ActiveRecord::Base
   has_and_belongs_to_many :play_methods
 
   accepts_nested_attributes_for :play_methods, allow_destroy: true
+
 end

@@ -40,6 +40,8 @@ AdBoard::Application.routes.draw do
     end
   end
 
+  resource :money_orders
+
   #resources :jobs
 
 end

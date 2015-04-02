@@ -85,16 +85,15 @@ class User < ActiveRecord::Base
 
   def paypal_url(return_path)
     values = {
-        business: "n.gnotov-facilitator@gmail.com",
-        cmd: "_xclick",
-        upload: 1,
-        return: return_path,
-        invoice: SecureRandom.uuid,
-        amount: 10,
-        item_name: "test",
-        item_number: self.id,
-        quantity: '1',
-        notify_url: "http://ad_board.ngrok.com/hook"
+      business: "n.gnotov-facilitator@gmail.com",
+      cmd: "_xclick",
+      upload: 1,
+      return: return_path,
+      invoice: SecureRandom.uuid,
+      amount: 10,
+      item_name: "EG credits",
+      quantity: '1',
+      notify_url: "http://ad_board.ngrok.com/hook"
     }
     "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
   end

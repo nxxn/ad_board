@@ -13,10 +13,30 @@ class TasksController < ApplicationController
     @task = Task.new(params[:task])
     @task.user = current_user
 
-    if @task.save
-      redirect_to :back
+    if @task.user.balance.to_f < @task.estimated_price
+      @task.active = false
+      @task.save
+      needed_amount = @task.estimated_price - @task.user.balance.to_f
+
+      if needed_amount % 10 == 0   # already a factor of 10
+        rounded_amount = needed_amount
+      else
+        rounded_amount = needed_amount + 10 - (needed_amount % 10)  # go to nearest factor 10
+      end
+      @money_order = MoneyOrder.create!(
+        amount: rounded_amount,
+        user_id: @task.user.id,
+        payment_status: "pending",
+        invoice: SecureRandom.uuid,
+        task_id: @task.id
+      )
+      redirect_to @money_order.paypal_url(request.referrer, hook_url)
     else
-      render action: "new"
+      @task.payment_status = "paid"
+      @task.user.balance -= @task.estimated_price
+      @task.save
+      @task.user.save
+      redirect_to :back
     end
   end
 
