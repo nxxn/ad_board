@@ -86,11 +86,11 @@
         <% end %>
       <% elsif task.status == "not completed" %>
         <div class="complete_confirm_quest_link_container">
-          <%= link_to "Complete quest", complete_task_path(task) %>
+          <%= link_to "Complete quest", complete_task_path(task), :confirm => 'Are you sure quest is fully complete?' %>
         </div>
       <% elsif task.status == "not confirmed" && current_user == task.user %>
         <div class="complete_confirm_quest_link_container">
-          <%= link_to "Confirm quest", confirm_task_path(task) %>
+          <%= link_to "Confirm quest", confirm_task_path(task), :confirm => 'Are you sure quest is fully complete?' %>
         </div>
       <% elsif task.status == "not confirmed" && current_user == task.worker %>
         <div class="awaiting_quest_confirmation">
