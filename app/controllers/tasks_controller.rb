@@ -13,10 +13,10 @@ class TasksController < ApplicationController
     @task = Task.new(params[:task])
     @task.user = current_user
 
-    if @task.user.balance.to_f < @task.estimated_price
+    if @task.user.balance < @task.estimated_price
       @task.active = false
       @task.save
-      needed_amount = @task.estimated_price - @task.user.balance.to_f
+      needed_amount = @task.estimated_price - @task.user.balance
 
       if needed_amount % 10 == 0   # already a factor of 10
         rounded_amount = needed_amount
@@ -73,6 +73,8 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     if @task.user == current_user
       @task.status = "completed"
+      @task.worker.balance += @task.final_price
+      @task.worker.save
     end
     @task.save
 

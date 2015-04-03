@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150401184814) do
+ActiveRecord::Schema.define(:version => 20150403014037) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -140,20 +140,20 @@ ActiveRecord::Schema.define(:version => 20150401184814) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                                :default => "",    :null => false
-    t.string   "encrypted_password",                                   :default => "",    :null => false
-    t.string   "username",                                             :default => ""
-    t.string   "first_name",                                           :default => ""
-    t.string   "last_name",                                            :default => ""
-    t.string   "street",                                               :default => ""
-    t.string   "post_index",                                           :default => ""
-    t.string   "town",                                                 :default => ""
-    t.string   "country",                                              :default => ""
-    t.string   "phone",                                                :default => ""
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
+    t.string   "username",               :default => ""
+    t.string   "first_name",             :default => ""
+    t.string   "last_name",              :default => ""
+    t.string   "street",                 :default => ""
+    t.string   "post_index",             :default => ""
+    t.string   "town",                   :default => ""
+    t.string   "country",                :default => ""
+    t.string   "phone",                  :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                                        :default => 0,     :null => false
+    t.integer  "sign_in_count",          :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -161,17 +161,17 @@ ActiveRecord::Schema.define(:version => 20150401184814) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.datetime "created_at",                                                              :null => false
-    t.datetime "updated_at",                                                              :null => false
-    t.string   "unconfirmed_email",                                    :default => ""
-    t.boolean  "is_admin",                                             :default => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "unconfirmed_email",      :default => ""
+    t.boolean  "is_admin",               :default => false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.boolean  "approved",                                             :default => true
-    t.decimal  "balance",                :precision => 8, :scale => 2, :default => 0.0
-    t.integer  "rating",                                               :default => 0
+    t.boolean  "approved",               :default => true
+    t.float    "balance",                :default => 0.0
+    t.integer  "rating",                 :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
