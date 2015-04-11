@@ -30,6 +30,11 @@
       </div>
     </div>
   </div>
+  <% if current_user && current_user == @task.user && @task.status != "created" && @task.payment_status == "not paid" %>
+    <div class="task_show_pay">
+      <%= link_to "Pay for quest", pay_for_quest_task_path(@task) %>
+    </div>
+  <% end %>
 </div>
 
 <% if current_user && current_user == @task.user %>
@@ -50,7 +55,7 @@
               </div>
             <% end %>
           </div>
-          
+
           <% if offer.client_times > offer.worker_times %>
             <%= offer.user_id == current_user.id ? "#{offer.task.user.username} offered price:" : "You counter offered price:" %>
             <span class="task_show_offer_price"><%= offer.client_price %> EG</span>
@@ -58,6 +63,7 @@
 
           <br>
           <br>
+
           <b>Offer status:</b>
           <% if offer.status == "Pending" %>
             <span style="color: #337ab7;"><%= offer.status %></span>

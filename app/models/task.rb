@@ -1,5 +1,5 @@
 class Task < ActiveRecord::Base
-  attr_accessible :user_id, :name, :description, :estimated_price, :term, :active, :game_id, :play_method_ids, :quest_type_id, :status, :worker_id, :payment_status, :final_price, :client_feedback, :worker_feedback
+  attr_accessible :user_id, :name, :description, :estimated_price, :term, :active, :game_id, :play_method_ids, :quest_type_id, :status, :worker_id, :payment_status, :final_price, :client_feedback, :worker_feedback, :offers_count
 
   belongs_to :user
   belongs_to :game

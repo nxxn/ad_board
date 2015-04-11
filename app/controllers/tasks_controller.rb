@@ -11,33 +11,13 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(params[:task])
-    @task.user = current_user
 
-    if @task.user.balance < @task.estimated_price
-      @task.active = false
-      @task.save
-      needed_amount = @task.estimated_price - @task.user.balance
-
-      if needed_amount % 10 == 0   # already a factor of 10
-        rounded_amount = needed_amount
-      else
-        rounded_amount = needed_amount + 10 - (needed_amount % 10)  # go to nearest factor 10
-      end
-      @money_order = MoneyOrder.create!(
-        amount: rounded_amount,
-        user_id: @task.user.id,
-        payment_status: "pending",
-        invoice: SecureRandom.uuid,
-        task_id: @task.id
-      )
-      redirect_to @money_order.paypal_url(request.referrer, hook_url)
-    else
-      @task.payment_status = "paid"
-      @task.user.balance -= @task.estimated_price
-      @task.save
-      @task.user.save
+    if @task.save
       redirect_to :back
+    else
+      render action: "new"
     end
+
   end
 
   def update
@@ -99,6 +79,32 @@ class TasksController < ApplicationController
     end
 
     redirect_to :back
+  end
+
+  def pay_for_quest
+    @task = Task.find(params[:id])
+    @user = @task.user
+
+    if @user.balance < @task.final_price
+      @task.active = false
+      @task.save
+
+      needed_amount = @task.final_price - @user.balance
+
+      # if needed_amount % 10 == 0   # already a factor of 10
+      #   rounded_amount = needed_amount
+      # else
+      #   rounded_amount = needed_amount + 10 - (needed_amount % 10)  # go to nearest factor 10
+      # end
+
+      redirect_to add_credits_money_orders_path(amount: needed_amount, task: @task.id)
+    else
+      @task.payment_status = "paid"
+      @user.balance = @user.balance - @task.final_price
+      @task.save
+      @user.save
+      redirect_to tasks_user_path(current_user)
+    end
   end
 
 end

@@ -4,6 +4,8 @@ class OffersController < ApplicationController
     @offer = Offer.new(params[:offer])
     @offer.user = current_user
     @offer.status = "Pending"
+    @offer.task.offers_count += 1
+    @offer.task.save
 
     if @offer.save
       redirect_to offers_user_path(current_user)
@@ -30,17 +32,15 @@ class OffersController < ApplicationController
   def client_accept
     @offer = Offer.find params[:id]
     @offer.status = "Accepted"
-    @offer.save
 
     @task = Task.find params[:task_id]
     @task.active = false
     @task.status = "not completed"
     @task.worker_id = @offer.user.id
     @task.final_price = @offer.worker_price
+
+    @offer.save
     @task.save
-    @user = @task.user
-    @user.balance = @user.balance - @task.final_price
-    @user.save
 
     redirect_to tasks_user_path(current_user)
   end
@@ -56,9 +56,6 @@ class OffersController < ApplicationController
     @task.worker_id = @offer.user.id
     @task.final_price = @offer.client_price
     @task.save
-    @user = @task.user
-    @user.balance = @user.balance - @task.final_price
-    @user.save
 
     redirect_to tasks_user_path(current_user)
   end
@@ -66,6 +63,8 @@ class OffersController < ApplicationController
   def decline
     @offer = Offer.find params[:id]
     @offer.status = "Declined"
+    @offer.task.offers_count -= 1
+    @offer.task.save
     @offer.save
 
     redirect_to :back

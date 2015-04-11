@@ -60,7 +60,8 @@ class UsersController < ApplicationController
       if !@money_order.task_id.nil?
         @task = Task.find(@money_order.task_id)
         @task.active = true
-        @user.balance -= @task.estimated_price
+        @task.payment_status = "paid"
+        @user.balance -= @task.final_price
         @task.save
       end
       @money_order.save

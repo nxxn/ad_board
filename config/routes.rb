@@ -27,6 +27,7 @@ AdBoard::Application.routes.draw do
     member do
       get :complete
       get :confirm
+      get :pay_for_quest
       post :leave_feedback
     end
   end
@@ -40,7 +41,11 @@ AdBoard::Application.routes.draw do
     end
   end
 
-  resource :money_orders
+  resource :money_orders do
+    collection do
+      get :add_credits
+    end
+  end
 
   #resources :jobs
 

@@ -1,0 +1,31 @@
+<div class="add_credits_container">
+  <%= simple_form_for @money_order do |f| %>
+    <div class="modal_heading">
+      Enter amount of credits you want to add to your account:
+    </div>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :invoice, value: SecureRandom.uuid %>
+    <% if params["task"].present? %>
+      <%= f.hidden_field :task_id, value: params["task"] %>
+    <% end %>
+    <div class="leave_feedback_radio_container">
+      <input class="leave_feedback_radio" name="money_order[amount]" type="radio" value="100" <%= params["amount"].present? ? "" : "checked" %>>
+      <label class="collection_radio_buttons" for="review_positive_true">100 credits - 1 USD</label>
+      <br>
+      <input class="leave_feedback_radio" name="money_order[amount]" type="radio" value="200">
+      <label class="collection_radio_buttons" for="review_positive_false">200 credits - 2 USD</label>
+      <br>
+      <input class="leave_feedback_radio" id="custom_credit_amount_radio" name="money_order[amount]" type="radio" value="<%= params["amount"].present? ? params["amount"] : 10 %>" <%= params["amount"].present? ? "checked" : "" %>>
+      <label class="collection_radio_buttons" for="review_positive_false">Custom amount - <span class="custom_credit_amount_usd"><%= params["amount"].present? ? (Setting.get_value("price_for_credit").to_f * params["amount"].to_f) : 0.1 %></span> USD</label>
+    </div>
+    Enter your custom amount
+    <input class="numeric float optional" id="custom_credit_amount" step="any" type="number" value="<%= params["amount"].present? ? params["amount"] : 10 %>">
+
+    <div class="modal_heading">
+      After submitting you will be redirectected to PayPal.
+    </div>
+    <div class="make_offer_button_container">
+      <button type="submit" class="leave_feedback_button">Buy</button>
+    </div>
+  <% end %>
+</div>

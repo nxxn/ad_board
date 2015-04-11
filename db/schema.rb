@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150403014037) do
+ActiveRecord::Schema.define(:version => 20150404111454) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "namespace"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20150403014037) do
     t.string   "payment_status",  :default => "not paid"
     t.boolean  "client_feedback", :default => false
     t.boolean  "worker_feedback", :default => false
+    t.integer  "offers_count",    :default => 0
   end
 
   create_table "users", :force => true do |t|
