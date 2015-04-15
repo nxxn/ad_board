@@ -11,6 +11,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(params[:task])
+    @task.user = current_user
 
     if @task.save
       redirect_to :back
