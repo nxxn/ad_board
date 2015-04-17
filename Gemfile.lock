@@ -72,6 +72,11 @@ GEM
     bullet (4.14.4)
       activesupport (>= 3.0.0)
       uniform_notifier (>= 1.6.0)
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.7)
@@ -95,6 +100,8 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.3.0)
+    foreigner (1.7.4)
+      activerecord (>= 3.0.0)
     formtastic (3.1.3)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.1.1)
@@ -119,9 +126,15 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     libv8 (3.16.14.7)
+    local_time (1.0.2)
+      coffee-rails
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mailboxer (0.12.5)
+      carrierwave (>= 0.5.8)
+      foreigner (>= 0.9.1)
+      rails (>= 3.2.0)
     mime-types (1.25.1)
     mini_portile (0.6.2)
     multi_json (1.10.1)
@@ -446,6 +459,8 @@ DEPENDENCIES
   country_select!
   devise
   jquery-rails
+  local_time
+  mailboxer
   paperclip
   pg
   rails (= 3.2.21)

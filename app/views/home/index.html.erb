@@ -1,160 +1,350 @@
-<ul class="main_page_links_list">
-  <li><%= link_to "New",  root_url, class: "#{!params[:price] ? "active" : "" }" %></li>
-  <li><%= link_to "Price",  root_url(price: true), class: "#{params[:price] ? "active" : "" }" %></li>
-</ul>
+<% if false %>
+  <ul class="main_page_links_list">
+    <li><%= link_to "New",  root_url, class: "#{!params[:price] ? "active" : "" }" %></li>
+    <li><%= link_to "Price",  root_url(price: true), class: "#{params[:price] ? "active" : "" }" %></li>
+  </ul>
 
-<div class="home_tasks_container">
-  <!-- Task render start -->
-  <div class="home_tasks_container_left">
-    <% if @tasks.count > 0 %>
-      <% @tasks.each do |task| %>
-        <div class="home_task">
-          <div class="home_task_left">
-            <div class="home_task_left_avatar">
-              <% if task.user.avatar.present? %>
-                <%= image_tag task.user.avatar.url(:thumb), alt: "Avatar" %>
-              <% else %>
-                <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
-              <% end %>
-            </div>
-            <div class="home_task_right_user_info">
-              <div class='home_task_right_user_info_username'>
-                <%= link_to task.user.username, user_path(task.user) %>
-              </div>
-              <!-- <div class='home_task_right_user_info_level'>
-                LEVEL 2
-              </div> -->
-              <div class='home_task_right_user_info_rating'>
-                <% if task.user.rating == 0 %>
-                  No feedback yet
+  <div class="home_tasks_container">
+    <!-- Task render start -->
+    <div class="home_tasks_container_left">
+      <% if @tasks.count > 0 %>
+        <% @tasks.each do |task| %>
+          <div class="home_task">
+            <div class="home_task_left">
+              <div class="home_task_left_avatar">
+                <% if task.user.avatar.present? %>
+                  <%= image_tag task.user.avatar.url(:thumb), alt: "Avatar" %>
                 <% else %>
-                  <%= task.user.rating %>% positive feedback
+                  <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+                <% end %>
+              </div>
+              <div class="home_task_right_user_info">
+                <div class='home_task_right_user_info_username'>
+                  <%= link_to task.user.username, user_path(task.user) %>
+                </div>
+                <!-- <div class='home_task_right_user_info_level'>
+                  LEVEL 2
+                </div> -->
+                <div class='home_task_right_user_info_rating'>
+                  <% if task.user.rating == 0 %>
+                    No feedback yet
+                  <% else %>
+                    <%= task.user.rating %>% positive feedback
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <div class="home_task_right_side">
+              <div class="home_task_right_side_subleft">
+                <div class="home_task_right_name completed_quest_name">
+                  <%= link_to truncate(task.name, length: 80, separator: ' '), "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
+                </div>
+                <div class="home_task_right_bottom_description completed_quest_desc">
+                  <%= link_to truncate(task.description, length: 80, separator: ' '), "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
+                </div>
+                <div class="quests_play_methods_icons">
+                  <% if task.play_methods.count > 0 %>
+                    <% task.play_methods.each do |method| %>
+                      <% if method.name == "Selfplay" %>
+                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true" title="Selfplay"></span>
+                      <% elsif method.name == "Account Sharing" %>
+                        <span class="glyphicon glyphicon-bullhorn" aria-hidden="true" title="Account Sharing"></span>
+                      <% elsif method.name == "LiveStream" %>
+                        <span class="glyphicon glyphicon-link" aria-hidden="true" title="LiveStream"></span>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </div>
+                <div class="user_quests_game">
+                  <% if task.game && task.quest_type %>
+                    <%= task.game.name %> / <%= task.quest_type.name %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="home_task_right_side_subright">
+                <div class="offers_count">
+                  Offers: <%= task.offers_count %> / <%= @max_offers_count_for_quest %>
+                </div>
+                <div class="home_task_price quests_price">
+                  <%= task.estimated_price %> EG
+                </div>
+                <!-- Button trigger modal -->
+                <% if current_user && current_user != task.user %>
+                  <% current_user_offers = task.offers.where(user_id: current_user.id).first if current_user %>
+                  <% if task.offers_count < @max_offers_count_for_quest %>
+                    <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
+                      <% if !current_user_offers %>
+                        <div class="accept_button">
+                          <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal-<%= task.id %>">
+                            Accept
+                          </button>
+                        </div>
+                        <%= render partial: 'offers/new_offer_form', locals: { offer: @offer, task: task } %>
+                      <% else %>
+                        <div class="already_submitted">
+                          You already submitted offer
+                        </div>
+                      <% end %>
+                    <% elsif current_user && !current_user.profile_progress %>
+                      <div class="accept_button">
+                        <%= link_to edit_user_registration_path(personal: "true") do %>
+                          <button type="button" class="make_offer_button modal_button">
+                            Accept
+                          </button>
+                        <% end %>
+                      </div>
+                    <% elsif !current_user %>
+                      <div class="accept_button">
+                        <%= link_to "/sign_up" do %>
+                          <button type="button" class="make_offer_button modal_button">
+                            Accept
+                          </button>
+                        <% end %>
+                      </div>
+                    <% elsif current_user.profile_progress && !current_user.approved %>
+                      <div class="waiting_approve">
+                        Waiting for account approve
+                      </div>
+                    <% end %>
+                  <% elsif current_user && task.offers_count == @max_offers_count_for_quest && current_user_offers %>
+                    <div class="already_submitted">
+                      You already submitted offer
+                    </div>
+                  <% end %>
                 <% end %>
               </div>
             </div>
           </div>
-          <div class="home_task_right_side">
-            <div class="home_task_right_side_subleft">
-              <div class="home_task_right_name completed_quest_name">
-                <%= link_to truncate(task.name, length: 80, separator: ' '), "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
-              </div>
-              <div class="home_task_right_bottom_description completed_quest_desc">
-                <%= link_to truncate(task.description, length: 80, separator: ' '), "#", :data => {toggle: "modal", target: "#taskShowModal-#{task.id}"} %>
-              </div>
-              <div class="quests_play_methods_icons">
-                <% if task.play_methods.count > 0 %>
-                  <% task.play_methods.each do |method| %>
-                    <% if method.name == "Selfplay" %>
-                      <span class="glyphicon glyphicon-map-marker" aria-hidden="true" title="Selfplay"></span>
-                    <% elsif method.name == "Account Sharing" %>
-                      <span class="glyphicon glyphicon-bullhorn" aria-hidden="true" title="Account Sharing"></span>
-                    <% elsif method.name == "LiveStream" %>
-                      <span class="glyphicon glyphicon-link" aria-hidden="true" title="LiveStream"></span>
-                    <% end %>
-                  <% end %>
-                <% end %>
-              </div>
-              <div class="user_quests_game">
-                <% if task.game && task.quest_type %>
-                  <%= task.game.name %> / <%= task.quest_type.name %>
-                <% end %>
-              </div>
-            </div>
-            <div class="home_task_right_side_subright">
-              <div class="offers_count">
-                Offers: <%= task.offers_count %> / <%= @max_offers_count_for_quest %>
-              </div>
-              <div class="home_task_price quests_price">
-                <%= task.estimated_price %> EG
-              </div>
-              <!-- Button trigger modal -->
-              <% if current_user && current_user != task.user %>
-                <% current_user_offers = task.offers.where(user_id: current_user.id).first if current_user %>
-                <% if task.offers_count < @max_offers_count_for_quest %>
-                  <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
-                    <% if !current_user_offers %>
-                      <div class="accept_button">
-                        <button type="button" class="make_offer_button modal_button" data-dismiss="modal" data-toggle="modal" data-target="#offerModal-<%= task.id %>">
-                          Accept
-                        </button>
-                      </div>
-                      <%= render partial: 'offers/new_offer_form', locals: { offer: @offer, task: task } %>
-                    <% else %>
-                      <div class="already_submitted">
-                        You already submitted offer
-                      </div>
-                    <% end %>
-                  <% elsif current_user && !current_user.profile_progress %>
-                    <div class="accept_button">
-                      <%= link_to edit_user_registration_path(personal: "true") do %>
-                        <button type="button" class="make_offer_button modal_button">
-                          Accept
-                        </button>
-                      <% end %>
-                    </div>
-                  <% elsif !current_user %>
-                    <div class="accept_button">
-                      <%= link_to "/sign_up" do %>
-                        <button type="button" class="make_offer_button modal_button">
-                          Accept
-                        </button>
-                      <% end %>
-                    </div>
-                  <% elsif current_user.profile_progress && !current_user.approved %>
-                    <div class="waiting_approve">
-                      Waiting for account approve
-                    </div>
-                  <% end %>
-                <% elsif current_user && task.offers_count == @max_offers_count_for_quest && current_user_offers %>
-                  <div class="already_submitted">
-                    You already submitted offer
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
+          <%= render partial: 'tasks/task_modal', locals: { task: task } %>
+        <% end %>
+      <% else %>
+        <div class="home_no_quests">
+          There's no quests yet
+        </div>
+      <% end %>
+    </div>
+    <!-- Task render end -->
+    <!-- Sorting start -->
+    <div class="sorting_container">
+      <div class="sorting_genres sorting_block">
+        <div class="sorting_header">
+          Genres
+        </div>
+        <% @genres.each do |genre| %>
+          <div class="sorting_content">
+            <%= link_to genre.name, root_url(genre: genre.name) %>
+          </div>
+        <% end %>
+      </div>
+      <div class="sorting_games sorting_block">
+        <div class="sorting_header">
+          Most popular games
+        </div>
+        <% @games.each do |game| %>
+          <div class="sorting_content">
+            <%= link_to game.name, root_url(game: game.name) %>
+          </div>
+        <% end %>
+      </div>
+      <div class="play_methods sorting_block">
+        <div class="sorting_header">
+          Play methods
+        </div>
+        <% @play_methods.each do |method| %>
+          <div class="sorting_content">
+            <%= link_to method.name, root_url(play_method: method.name) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <!-- Sorting end -->
+  </div>
+
+<% else %>
+
+  <div class="sort">
+    <ul>
+      <li class="title">Sort by:</li>
+      <%= link_to root_url, class: "#{!params[:price] ? "active" : "" }" do %>
+        <li>New</li>
+      <% end %>
+      <%= link_to root_url(price: true), class: "#{params[:price] ? "active" : "" }" do %>
+        <li>Price</li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="quests">
+    <div class="quest newq">
+       <div class="qleft">
+        <div class="questname">
+          Black Rock Foundry Heroic lootrun with Master Looter (Feral Druid)
+        </div>
+        <div class="questdesc">
+          Hi, i am playing feral druid and i am looking for BRF HC Boost with Loot. I have 670 Gearscore. Selfplay only!
+        </div>
+        <div class="questtype">
+          <p>Quest Type:</p>
+          <div class="icons">
+            <img src="assets/icons/wow.png" alt="">
+            <img src="assets/icons/raid.png" alt="">
+            <img src="assets/icons/selfplay.png" alt="">
           </div>
         </div>
-        <%= render partial: 'tasks/task_modal', locals: { task: task } %>
-      <% end %>
-    <% else %>
-      <div class="home_no_quests">
-        There's no quests yet
+        <div class="submitted">
+          Submitted by <a href="">username</a> on: Sunday 29/03/2015
+        </div>
+        <div class="offerstatus">
+          Offers: 0/10
+        </div>
+       </div>
+       <div class="rewardbox">
+         <div class="rewardbox_text">
+           <p class="title">REWARD</p>
+           <p class="credits">1000 EG</p>
+           <p class="exp">+ 280 XP</p>
+           <p class="addrewards">Additional Rewards:</p>
+         </div>
+         <div class="chests">
+             <img src="assets/icons/small_green.png" alt="">
+             <img src="assets/icons/small_blue.png" alt="">
+             <img src="assets/icons/small_epic.png" alt="">
+         </div>
+         <a href="" class="accept">ACCEPT QUEST</a>
+       </div>
+    </div>
+    <!-- Second quest -->
+    <div class="quest newq">
+       <div class="qleft">
+        <div class="questname">
+          Proving Grounds - Endless Damage - Gold for Warlock
+        </div>
+        <div class="questdesc">
+          Hi, WTB Proving Grounds - Endless Damage - Gold for Warlock. With Livestream please! PG Silver already...
+        </div>
+        <div class="questtype">
+            <p>Quest Type:</p>
+            <div class="icons">
+                <img src="assets/icons/wow.png" alt="">
+                <img src="assets/icons/stream.png" alt="">
+            </div>
+        </div>
+        <div class="submitted">
+          Submitted by <a href="">username</a> on: Sunday 29/03/2015
+        </div>
+        <div class="offerstatus">
+          You have already submitted an offer
+        </div>
+       </div>
+       <div class="rewardbox">
+         <div class="rewardbox_text">
+           <p class="title">REWARD</p>
+           <p class="credits">2500 EG</p>
+           <p class="exp">+ 510 XP</p>
+           <p class="addrewards">Additional Rewards:</p>
+         </div>
+         <div class="chests">
+           <img src="assets/icons/small_green.png" alt="">
+           <img src="assets/icons/small_blue.png" alt="">
+           <img src="assets/icons/small_epic.png" alt="">
+         </div>
+         <a href="" class="pending">OFFER PENDING</a>
+       </div>
+    </div>
+    <!-- Third quest -->
+    <div class="quest newq">
+       <div class="qleft">
+        <div class="questname">
+            LF 2x2 Arena Rating Boost 0-2000 (Rogue)
+        </div>
+        <div class="questdesc">
+            Hi, i am looking for someone who can boost me on 2x2 Arena. I need 2000 Rating
+for Gladiator Gear. I have...
+        </div>
+        <div class="questtype">
+            <p>Quest Type:</p>
+            <div class="icons">
+                <img src="assets/icons/wow.png" alt="">
+                <img src="assets/icons/pvp.png" alt="">
+                <img src="assets/icons/stream.png" alt="">
+            </div>
+        </div>
+        <div class="submitted">
+            Submitted by <a href="">username</a> on: Sunday 29/03/2015
+        </div>
+        <div class="offerstatus">
+            Your offer was approved
+        </div>
+       </div>
+       <div class="rewardbox">
+         <div class="rewardbox_text">
+           <p class="title">REWARD</p>
+           <p class="credits">1200 EG</p>
+           <p class="exp">+ 310 XP</p>
+           <p class="addrewards">Additional Rewards:</p>
+         </div>
+           <div class="chests">
+               <img src="assets/icons/small_green.png" alt="">
+               <img src="assets/icons/small_blue.png" alt="">
+               <img src="assets/icons/small_epic.png" alt="">
+           </div>
+           <a href="" class="accept">COMPLETE QUEST</a>
+       </div>
+    </div>
+  </div>
+  <div class="sidebar">
+    <% if current_user %>
+      <div class="profile">
+        <div class="profleft">
+          <p class="balance">My Balance:</p>
+          <p class="credits"><%= current_user.balance %> EG</p>
+          <ul>
+            <li class="more"><a href="">Add EG</a></li>
+            <li class="fullprof"><%= link_to "Full profile", user_path(current_user) %></li>
+          </ul>
+        </div>
+       <div class="profright">
+        <div class="avatar">
+          <% if current_user.avatar.present? %>
+            <%= image_tag current_user.avatar.url(:thumb), alt: "Avatar" %>
+          <% else %>
+            <img src="assets/avatar.png" alt="">
+          <% end %>
+        </div>
+        <div class="shield">
+          <span class="level">9</span>
+        </div>
+       </div>
       </div>
     <% end %>
-  </div>
-  <!-- Task render end -->
-  <!-- Sorting start -->
-  <div class="sorting_container">
-    <div class="sorting_genres sorting_block">
-      <div class="sorting_header">
-        Genres
-      </div>
-      <% @genres.each do |genre| %>
-        <div class="sorting_content">
-          <%= link_to genre.name, root_url(genre: genre.name) %>
-        </div>
-      <% end %>
+    <div class="genres">
+      <h4>Game Genres</h4>
+      <ul>
+        <% @genres.each do |genre| %>
+          <%= link_to root_url(genre: genre.name) do %>
+            <li><%= genre.name %></li>
+          <% end %>
+        <% end %>
+      </ul>
     </div>
-    <div class="sorting_games sorting_block">
-      <div class="sorting_header">
-        Most popular games
-      </div>
-      <% @games.each do |game| %>
-        <div class="sorting_content">
-          <%= link_to game.name, root_url(game: game.name) %>
-        </div>
-      <% end %>
+    <div class="popular">
+      <h4>Most Popular Games</h4>
+      <ul>
+        <% @games.each do |game| %>
+          <%= link_to root_url(game: game.name) do %>
+            <li><%= game.name %></li>
+          <% end %>
+        <% end %>
+      </ul>
     </div>
-    <div class="play_methods sorting_block">
-      <div class="sorting_header">
-        Play methods
-      </div>
-      <% @play_methods.each do |method| %>
-        <div class="sorting_content">
-          <%= link_to method.name, root_url(play_method: method.name) %>
-        </div>
-      <% end %>
+    <div class="methods">
+      <h4>Play Methods <a href=""><span>?</span></a></h4>
+      <ul>
+        <% @play_methods.each do |method| %>
+          <%= link_to root_url(play_method: method.name) do %>
+            <li><%= method.name %></li>
+          <% end %>
+        <% end %>
+      </ul>
     </div>
   </div>
-  <!-- Sorting end -->
-</div>
+<% end %>

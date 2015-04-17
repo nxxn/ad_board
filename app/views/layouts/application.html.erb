@@ -5,64 +5,127 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
 
   <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="fullwidth_container">
-    <div class="global_header">
+  <div id="header">
+      <div class="inner-header">
+          <div class="logo">
+              <a href="/"><img src="/assets/logo.png"></a>
+          </div>
+          <div class="login">
+            <% if current_user %>
+              <ul>
+                <li>Hello <span><%= link_to current_user.username, user_path(current_user.id), class: "header_user_link" %></span></li>
+                <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+              </ul>
+            <% else %>
+              <div class="login">
+                <%= form_for(:user, :url => session_path(:user)) do |f| %>
+                  <div class="name">
+                    <p class="logintitle">Login:</p>
+                    <input name="user[login]" type="text" class="urname">
+                  </div>
+                  <div class="pass">
+                    <p class="passtitle">Password:</p>
+                    <input name="user[password]" type="password" class="password">
+                    <input checked="checked" id="user_remember_me" name="user[remember_me]" type="hidden">
+                  </div>
+                  <input class="lbutton" name="commit" type="submit" value="LOGIN">
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+      </div>
+  </div>
+
+  <% if false %>
+    <div class="fullwidth_container">
+      <div class="global_header">
+        <% if controller_name == "home" %>
+          <div class="container main_page_large_container">
+        <% else %>
+          <div class="container">
+        <% end %>
+          <div class="logo">
+            <a href="/">EasyGame.com</a>
+          </div>
+          <% if current_user %>
+            <div class="header_welcome">
+              Hello <%= link_to current_user.username, user_path(current_user.id) %> |
+
+              <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+
+              <% if current_user.confirmed_at.nil? %>
+                <br>
+                You need to confirm your email.
+              <% end %>
+            </div>
+          <% else %>
+          <div class="header_login_form">
+            <%= form_for(:user, :url => session_path(:user)) do |f| %>
+              <%= f.text_field :login, placeholder: "Username" %>
+              <br>
+              <%= f.password_field :password, placeholder: "Password" %>
+              <%= f.hidden_field :remember_me, checked: true %>
+              <br>
+              <%= f.submit 'Login', class: "login_button" %>
+              <!-- <%= link_to "Forgot your password?", new_password_path(:user) %> -->
+              <div class="registration_button">
+                <%= link_to "Registration", '/sign_up' %>
+              </div>
+            <% end %>
+
+          </div>
+          <% end %>
+        </div>
+      </div>
       <% if controller_name == "home" %>
         <div class="container main_page_large_container">
       <% else %>
         <div class="container">
       <% end %>
-        <div class="logo">
-          <a href="/">EasyGame.com</a>
-        </div>
-        <% if current_user %>
-          <div class="header_welcome">
-            Hello <%= link_to current_user.username, user_path(current_user.id) %> |
-
-            <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-
-            <% if current_user.confirmed_at.nil? %>
-              <br>
-              You need to confirm your email.
-            <% end %>
-          </div>
-        <% else %>
-        <div class="header_login_form">
-          <%= form_for(:user, :url => session_path(:user)) do |f| %>
-            <%= f.text_field :login, placeholder: "Username" %>
-            <br>
-            <%= f.password_field :password, placeholder: "Password" %>
-            <%= f.hidden_field :remember_me, checked: true %>
-            <br>
-            <%= f.submit 'Login', class: "login_button" %>
-            <!-- <%= link_to "Forgot your password?", new_password_path(:user) %> -->
-            <div class="registration_button">
-              <%= link_to "Registration", '/sign_up' %>
-            </div>
-          <% end %>
-
-        </div>
-        <% end %>
+        <%= render partial: 'layouts/top_buttons' %>
+        <%= yield %>
       </div>
     </div>
-    <% if controller_name == "home" %>
-      <div class="container main_page_large_container">
-    <% else %>
-      <div class="container">
-    <% end %>
-      <%= render partial: 'layouts/top_buttons' %>
-      <%= yield %>
+  <% end %>
+
+  <div class="content">
+    <div class="navi">
+     <div class="nleft">
+         <ul>
+             <li class="title">Categories</li>
+             <a href=""><li>Events</li></a>
+             <a href=""><li>HOT Offers</li></a>
+             <a href=""><li>Quests</li></a>
+             <a href=""><li>Items Market</li></a>
+         </ul>
+     </div>
+     <div class="nright">
+       <ul>
+        <a href=""><li>My Actions</li></a>
+        <%= link_to "#", :data => {toggle: "modal", target: "#taskModal"} do %>
+          <li class="dropdown">+ New Action</li>
+        <% end %>
+        <% if false %>
+          <%= render partial: 'tasks/new_task_form', locals: { task: @task } %>
+        <% end %>
+       </ul>
+     </div>
     </div>
+    <%= yield %>
   </div>
+
 </body>
 </html>

@@ -1,0 +1,24 @@
+<% if @conversations.present? %>
+
+  <% @conversations.each do |conversation| %>
+    <% participant = conversation.participants.select{ |p| !p.id.eql?(current_user.id)} %>
+    <% @other_user = User.find(participant[0].id) %>
+  	<div id="conversation-container-<%= conversation.id %>">
+      <div class="">
+        <% if @other_user.avatar.present? %>
+          <%= image_tag @other_user.avatar.url(:thumb), alt: "Avatar" %>
+        <% else %>
+          <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+        <% end %>
+        <%= @other_user.username %>
+        <%= local_time(conversation.last_message.updated_at, "%d %b %H:%M") %>
+        <%= conversation.last_message.body.gsub(/\<br>/," ").truncate(35) %>
+      </div>
+  	</div>
+  <% end %>
+
+<% else %>
+
+  <p>You don't have any messages.</p>
+
+<% end %>

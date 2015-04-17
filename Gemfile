@@ -51,3 +51,9 @@ gem 'country_select', github: 'stefanpenner/country_select'
 #Photos upload
 gem 'paperclip'
 gem 'aws-sdk', '< 2.0'
+
+#Messaging
+gem 'mailboxer'
+
+#Local time
+gem 'local_time'

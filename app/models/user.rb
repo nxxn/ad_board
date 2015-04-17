@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   has_attached_file :avatar,
                     :storage => :s3,
-                    :styles => { :thumb => "100x125#"},
+                    :styles => { :thumb => "69x69#"},
                     :convert_options => {:thumb => '-strip -interlace plane -quality 90'},
                     :path => "user_avatars/:id.:style.:extension"
 
@@ -29,6 +29,8 @@ class User < ActiveRecord::Base
             }
 
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
+  acts_as_messageable
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

@@ -10,6 +10,8 @@ AdBoard::Application.routes.draw do
     get "sign_up", to: "devise/registrations#new"
   end
 
+  get 'users/:user_id/messages', to: 'messages#show_conversations', as: :user_conversations
+
   resources :users do
     member do
       get :tasks, :path => '/quests'

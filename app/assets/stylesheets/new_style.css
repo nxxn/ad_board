@@ -1,0 +1,577 @@
+/* New design start */
+
+html {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: url(bg.png) no-repeat top center #070707;
+    padding: 0;
+    margin: 0;
+    font-family: 'PT Sans', sans-serif;
+    height: 100%;
+    min-height: 100%;
+}
+
+#header {
+    width: 100%;
+    height: 60px;
+    background:  url(header_bg.png) no-repeat #1d1c1c top center;
+}
+
+.inner-header {
+    border-bottom: none;
+    width: 1110px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 20px 0 20px;
+}
+
+.logo {
+    height: 60px;
+    float: left;
+}
+
+.logo img {
+    margin-top: 15px;
+}
+
+/* Loginbox CSS stars */
+
+.login {
+    min-width: 230px;
+    height: 60px;
+    text-align: right;
+    float: right;
+}
+
+.login p {
+    color: #616161;
+    float: left;
+    margin-top: 18px;
+}
+
+.login .lbutton {
+  min-width: 65px;
+  min-height: 19px;
+  color: #ffffff !important;
+  background: #e9464b;
+  float: left;
+  text-align: center;
+  margin-top: 19px;
+  font-size: 13px;
+  padding-top: 1px;
+  border: none;
+  cursor: pointer;
+}
+
+.login .lbutton:focus {
+  outline: none;
+}
+
+.name {
+    float: left;
+    margin-right: 15px;
+}
+
+.pass {
+    float: left;
+    margin-right: 15px;
+}
+
+.password {
+    float: left;
+}
+
+.login .urname {
+    margin-top: 19px;
+    background: none;
+    border: none;
+    color: #616161;
+    border: 1px solid #616161;
+    padding-left: 5px;
+    width: 150px;
+    float: left;
+    margin-left: 10px;
+    padding-bottom: 3px;
+}
+
+.login .password {
+    margin-top: 19px;
+    background: none;
+    border: none;
+    color: #616161;
+    border: 1px solid #616161;
+    padding-left: 5px;
+    width: 150px;
+    float: left;
+    margin-left: 10px;
+    padding-bottom: 3px;
+}
+
+.login .urname :focus {
+    outline: none;
+}
+
+.login span {
+    color: #e9464b;
+}
+
+.login a {
+    color: #616161;
+    text-decoration: none;
+}
+
+.login a:hover {
+        color: #ffffff;
+}
+
+.login ul li {
+    padding-right: 10px;
+    padding-left: 5px;
+    list-style: none;
+    color: #616161;
+    display: inline;
+    border-right: 1px solid #616161;
+    float: none;
+}
+
+.login ul :last-child {
+    border: none;
+    padding-right: 0;
+}
+
+.login .header_user_link {
+  color: #e9464b
+}
+
+.navi {
+    width: 1100px;
+    min-width: 1110px;
+    height: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #494949;
+}
+
+/* login css ends */
+
+.content {
+    width: 1110px;
+    height: 100%;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.navi {
+    width: 1100px;
+    min-width: 1110px;
+    height: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ffffff;
+}
+
+.nleft {
+    float: left;
+}
+
+.nleft ul {
+    padding: 0;
+    margin: 0;
+}
+
+.nleft ul li {
+    list-style: none;
+    color: #e9e8e8;
+    background: url(b45.png);
+    padding: 2px 25px 2.5px 25px;
+    margin-right: 10px;
+    float: left;
+}
+
+.nleft ul .title {
+    background: #e9464b;
+    float: left;
+}
+
+.nright {
+    float: right;
+}
+
+.nright ul {
+    padding: 0;
+    margin: 0;
+}
+
+.nright ul li {
+    list-style: none;
+    color: #e9e8e8;
+    background: url(b45.png);
+    padding: 2px 25px 2.5px 25px;
+    margin-left: 10px;
+    float: right;
+}
+
+.nright ul .dropdown {
+    background: #e9464b;
+}
+
+.sort {
+    float: left;
+    width: 1110px;
+    margin-bottom: 4px;
+    margin-top: 2px;
+}
+
+.sort a :hover {
+    text-decoration: underline;
+}
+
+.sort ul {
+    margin: 0;
+    float: left;
+    padding: 0;
+}
+
+.sort ul .title {
+    color: #bdbdbd;
+}
+
+.sort ul li {
+    color: #fffefe;
+    list-style: none;
+    padding-right: 12px;
+    float: left;
+    font-size: 14.4px;
+}
+
+.quests {
+    width: 860px;
+    height: 100%;
+    float: left;
+}
+
+.quest {
+    width: 860px;
+    height: 204px;
+    background: url(b60.png);
+    margin-bottom: 15px;
+}
+
+.qleft {
+    margin: 0;
+    padding: 0;
+    width: 659px;
+    float: left;
+}
+
+.questname {
+    width: 610px;
+    color: #f0f0f0;
+    font-weight: 500;
+    float: left;
+    font-size: 20.1px;
+    padding: 20px 0 0 20px;
+}
+
+.questdesc {
+    width: 565px;
+    float: left;
+    color: #777777;
+    padding-left: 30px;
+    /*font-family: 'Open Sans', sans-serif;*/
+    /*font-weight: 600;*/
+    font-size: 14px;
+}
+
+.rewardbox {
+    background: url(rewardbox.png);
+    float: right;
+    width: 180px;
+    height: 100%;
+    margin-right: 20px;
+}
+
+.rewardbox_text {
+  float: left;
+  height: 132px;
+}
+
+.rewardbox .title {
+    color: #f0f0f0;
+    font-size: 20.1px;
+    float: right;
+    padding-right: 20px;
+    margin-bottom: 0;
+}
+
+.rewardbox .credits {
+    color: #f0f0f0;
+    font-size: 29.4px;
+    float: right;
+    padding-right: 20px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-weight: 700;
+}
+
+.rewardbox .exp {
+    color: #e9464b;
+    font-size: 20px;
+    float: right;
+    padding-right: 20px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    bottom: 6px;
+}
+
+.rewardbox .addrewards {
+    color: #575757;
+    font-size: 13px;
+    float: right;
+    padding-right: 20px;
+    margin-bottom: 0;
+    /*font-family: 'Open Sans', sans-serif;*/
+    margin-top: 0;
+}
+
+.rewardbox .chests {
+    float: right;
+    padding-right: 20px;
+    height: 30px;
+    min-height: 30px;
+}
+
+.rewardbox .chests img {
+    min-widht: 30px;
+    min-height: 25px;
+}
+
+.rewardbox .accept {
+    width: 180px;
+    height: 30px;
+    background: #e9464b;
+    float: right;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    margin-top: 7px;
+}
+
+.rewardbox .pending {
+    width: 180px;
+    height: 30px;
+    background: #151515;
+    float: right;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    margin-top: 7px;
+}
+
+.questtype {
+    width: 565px;
+    padding-left: 20px;
+    float: left;
+}
+
+.questtype p {
+    margin: 0;
+    color: #e9e8e8;
+}
+
+.icons {
+    float: left;
+    padding-top: 8px;
+    height: 47px;
+}
+
+.icons img {
+    padding-left: 8px;
+    min-width: 42px;
+    min-height: 42px;
+}
+
+.submitted {
+    float: left;
+    color: #575757;
+    padding-left: 20px;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-size: 13px;
+    margin-top: 23px;
+}
+
+.submitted a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.offerstatus {
+    float: right;
+    color: #575757;
+    padding-top: 23px;
+    padding-right: 20px;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-size: 13px;
+}
+
+.sidebar {
+    float: right;
+    width: 220px;
+}
+
+.sidebar h4 {
+    width: 210px;
+    height: 25px;
+    color: #e9e8e8;
+    font-weight: 400;
+    font-size: 16.3px;
+    padding-left: 10px;
+    background: url(b30.png);
+    margin: 0;
+}
+
+.sidebar h4 span {
+    float: right;
+    margin-right: 10px;
+    color: #6e6e6e;
+    font-weight: 700;
+}
+
+.sidebar ul {
+    margin-top: 10px;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.sidebar ul li {
+    color: #6e6e6e;
+    list-style: none;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-size: 13.2px;
+    margin-bottom: 5px;
+    padding-left: 20px;
+}
+
+.sidebar a {
+    text-decoration: none;
+}
+
+.sidebar a :hover {
+    color: #ffffff;
+}
+
+.profile {
+    height: 70px;
+    background: url(b60.png);
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.profleft {
+    float: left;
+    width: 122px;
+}
+
+.profile .balance {
+    color: #777777;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    width: 80px;
+    margin-right: 0;
+}
+
+.profile .credits {
+    color: #f0f0f0;
+    font-size: 27px;
+    float: left;
+    margin: 0;
+    position: relative;
+    bottom: 4px;
+}
+
+.profile ul {
+    color: #777777 !important;
+    float: left;
+    margin: 0;
+    position: relative;
+    bottom: 5px;
+}
+
+.profile ul li {
+    float: left;
+    padding: 0;
+    padding-right: 10px;
+    font-size: 11.3px;
+}
+
+.more a {
+    color: #ffffff;
+}
+
+.fullprof {
+    border-left: 1px solid #777777;
+}
+
+.fullprof a {
+    color: #777777;
+    padding-left: 5px;
+}
+
+.fullprof :hover {
+    color: #ffffff;
+}
+
+.avatar {
+    float: right;
+    margin: 0;
+}
+
+.shield {
+    color: #ffffff;
+    width: 32px;
+    height: 38px;
+    background: url(shield.png);
+    position: relative;
+    left: 173px;
+    bottom: 6px;
+}
+
+.level {
+    font-size: 22px;
+    position: relative;
+    bottom: 65px;
+    left: 11px;
+    font-weight: 700;
+}
+
+.genres {
+    background: url(b60.png);
+    margin-bottom: 15px;
+    padding-bottom: 13px;
+    float: left;
+}
+
+.popular {
+    background: url(b60.png);
+    margin-bottom: 15px;
+    padding-bottom: 13px;
+    float: left;
+}
+
+.methods {
+    background: url(b60.png);
+    margin-bottom: 15px;
+    padding-bottom: 13px;
+    float: left;
+}
+
+/* New design end */
