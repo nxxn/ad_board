@@ -108,4 +108,25 @@ class TasksController < ApplicationController
     end
   end
 
+  #methods for presentation
+
+  def accept
+    @task = Task.find(params[:id])
+    @task.status = "not completed"
+    @task.worker = current_user
+    @task.save
+
+    redirect_to :back
+  end
+
+  def send_money
+    @task = Task.find(params[:id])
+
+    @money_order = MoneyOrder.create(amount: @task.estimated_price, user_id: @task.user_id, payment_status: "pending", invoice: SecureRandom.uuid, task_id: @task.id)
+
+    redirect_url = request.referrer
+
+    redirect_to @money_order.paypal_url(redirect_url, hook_url)
+  end
+
 end

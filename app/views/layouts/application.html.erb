@@ -21,7 +21,7 @@
   <div id="header">
       <div class="inner-header">
           <div class="logo">
-              <a href="/"><img src="/assets/logo.png"></a>
+              <a href="/"><img src="/assets/logo2.png"></a>
           </div>
           <div class="login">
             <% if current_user %>
@@ -104,22 +104,26 @@
   <div class="content">
     <div class="navi">
      <div class="nleft">
-         <ul>
-             <li class="title">Categories</li>
-             <a href=""><li>Events</li></a>
-             <a href=""><li>HOT Offers</li></a>
-             <a href=""><li>Quests</li></a>
-             <a href=""><li>Items Market</li></a>
-         </ul>
+       <ul>
+         <li class="title">Categories</li>
+         <a href=""><li>Events</li></a>
+         <a href=""><li>HOT Offers</li></a>
+         <% if current_user %>
+          <%= link_to tasks_user_path(current_user) do %>
+            <li>Quests</li>
+          <% end %>
+         <% else %>
+            <a href=""><li>Quests</li></a>
+         <% end %>
+         <a href=""><li>Items Market</li></a>
+       </ul>
      </div>
      <div class="nright">
        <ul>
         <a href=""><li>My Actions</li></a>
+
         <%= link_to "#", :data => {toggle: "modal", target: "#taskModal"} do %>
-          <li class="dropdown">+ New Action</li>
-        <% end %>
-        <% if false %>
-          <%= render partial: 'tasks/new_task_form', locals: { task: @task } %>
+          <li class="dropdown">+ New Quest</li>
         <% end %>
        </ul>
      </div>

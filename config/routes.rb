@@ -31,6 +31,9 @@ AdBoard::Application.routes.draw do
       get :confirm
       get :pay_for_quest
       post :leave_feedback
+      #routes for presentation
+      get :send_money
+      get :accept
     end
   end
 

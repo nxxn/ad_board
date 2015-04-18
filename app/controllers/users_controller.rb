@@ -51,21 +51,45 @@ class UsersController < ApplicationController
   end
 
   def hook
-    ap params
+    # ap params
+    # if params[:payment_status] == "Completed"
+    #   @money_order = MoneyOrder.where(invoice: params[:invoice]).first
+    #   @money_order.payment_status = "paid"
+    #   @user = @money_order.user
+    #   @user.balance += params[:quantity].to_i
+    #   if !@money_order.task_id.nil?
+    #     @task = Task.find(@money_order.task_id)
+    #     @task.active = true
+    #     @task.payment_status = "paid"
+    #     @user.balance -= @task.final_price
+    #     @task.save
+    #   end
+    #   @money_order.save
+    #   @user.save
+    #   PaymentNotification.create!(
+    #     params: params.to_s,
+    #     money_order_id: @money_order.id,
+    #     status: params[:payment_status],
+    #     transaction_id: params[:txn_id]
+    #   )
+    # end
+    # ap @money_order
+    # ap @user
+
+    #changes for presentation
+
     if params[:payment_status] == "Completed"
       @money_order = MoneyOrder.where(invoice: params[:invoice]).first
       @money_order.payment_status = "paid"
-      @user = @money_order.user
-      @user.balance += params[:quantity].to_i
+
       if !@money_order.task_id.nil?
         @task = Task.find(@money_order.task_id)
         @task.active = true
         @task.payment_status = "paid"
-        @user.balance -= @task.final_price
         @task.save
       end
       @money_order.save
-      @user.save
+
       PaymentNotification.create!(
         params: params.to_s,
         money_order_id: @money_order.id,
@@ -73,8 +97,7 @@ class UsersController < ApplicationController
         transaction_id: params[:txn_id]
       )
     end
-    ap @money_order
-    ap @user
+
     render nothing: true
   end
 

@@ -6,12 +6,18 @@ html {
 }
 
 body {
-    background: url(bg.png) no-repeat top center #070707;
+    background: url(bg1.jpg) no-repeat top center #070707;
+    background-attachment: fixed;
     padding: 0;
     margin: 0;
     font-family: 'PT Sans', sans-serif;
     height: 100%;
     min-height: 100%;
+    color: #fffefe;
+}
+
+a {
+  color: #fffefe;
 }
 
 #header {
@@ -34,7 +40,8 @@ body {
 }
 
 .logo img {
-    margin-top: 15px;
+    margin-top: 5px;
+    height: 50px;
 }
 
 /* Loginbox CSS stars */
@@ -280,6 +287,8 @@ body {
     float: left;
     color: #777777;
     padding-left: 30px;
+    height: 38px;
+    min-height: 38px;
     /*font-family: 'Open Sans', sans-serif;*/
     /*font-weight: 600;*/
     font-size: 14px;
@@ -380,6 +389,7 @@ body {
     width: 565px;
     padding-left: 20px;
     float: left;
+    margin: 10px 0 0 0;
 }
 
 .questtype p {
@@ -405,7 +415,7 @@ body {
     padding-left: 20px;
     /*font-family: 'Open Sans', sans-serif;*/
     font-size: 13px;
-    margin-top: 23px;
+    margin-top: 13px;
 }
 
 .submitted a {
@@ -416,7 +426,7 @@ body {
 .offerstatus {
     float: right;
     color: #575757;
-    padding-top: 23px;
+    padding-top: 13px;
     padding-right: 20px;
     /*font-family: 'Open Sans', sans-serif;*/
     font-size: 13px;

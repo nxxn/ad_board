@@ -174,7 +174,76 @@
     </ul>
   </div>
   <div class="quests">
-    <div class="quest newq">
+
+    <% @tasks.each do |task| %>
+      <div class="quest newq">
+         <div class="qleft">
+          <div class="questname">
+            <%= truncate(task.name, length: 70, separator: ' ') %>
+          </div>
+          <div class="questdesc">
+            <%= truncate(task.description, length: 170, separator: ' ') %>
+          </div>
+          <div class="questtype">
+            <p>Quest Type:</p>
+            <div class="icons">
+              <% if task.play_methods.count > 0 %>
+                <% task.play_methods.each do |method| %>
+                  <img src="assets/icons/<%= method.name.downcase %>.png" alt="">
+                <% end %>
+              <% end %>
+              <% if task.game && task.quest_type %>
+                <img src="assets/icons/<%=  task.game.name.downcase %>.png" alt="">
+                <img src="assets/icons/<%=  task.quest_type.name.downcase %>.png" alt="">
+              <% end %>
+            </div>
+          </div>
+          <div class="submitted">
+            Submitted by <%= link_to task.user.username %> on: <%= task.created_at.strftime("%A %d/%m/%Y") %>
+          </div>
+          <div class="offerstatus">
+            Offers: <%= task.offers_count %> / <%= @max_offers_count_for_quest %>
+          </div>
+         </div>
+         <div class="rewardbox">
+           <div class="rewardbox_text">
+             <p class="title">REWARD</p>
+             <p class="credits"><%= task.estimated_price %> EG</p>
+             <p class="exp">+ 280 XP</p>
+             <p class="addrewards">Additional Rewards:</p>
+           </div>
+           <div class="chests">
+               <img src="assets/icons/small_green.png" alt="">
+               <img src="assets/icons/small_blue.png" alt="">
+               <img src="assets/icons/small_epic.png" alt="">
+           </div>
+           <% if current_user && current_user == task.user %>
+              <%= link_to "VIEW QUEST", task_path(task), class: "accept" %>
+           <% elsif current_user && current_user != task.user %>
+              <% current_user_offers = task.offers.where(user_id: current_user.id).first if current_user %>
+              <% if task.offers_count < @max_offers_count_for_quest %>
+                <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
+                  <% if !current_user_offers %>
+                    <%= link_to "ACCEPT", accept_task_path(task), class: "accept" %>
+                  <% else %>
+                    <a href="" class="pending">OFFER PENDING</a>
+                  <% end %>
+                <% elsif current_user && !current_user.profile_progress %>
+                  <%= link_to "ACCEPT", edit_user_registration_path(personal: "true"), class: "accept" %>
+                <% elsif !current_user %>
+                  <%= link_to "ACCEPT", "/sign_up", class: "accept" %>
+                <% elsif current_user.profile_progress && !current_user.approved %>
+                  <%= link_to "ACCEPT", accept_task_path(task), class: "accept" %>
+                <% end %>
+              <% elsif current_user && task.offers_count == @max_offers_count_for_quest && current_user_offers %>
+                <a href="" class="pending">OFFER PENDING</a>
+              <% end %>
+           <% end %>
+         </div>
+      </div>
+    <% end %>
+
+    <!-- <div class="quest newq">
        <div class="qleft">
         <div class="questname">
           Black Rock Foundry Heroic lootrun with Master Looter (Feral Druid)
@@ -211,9 +280,9 @@
          </div>
          <a href="" class="accept">ACCEPT QUEST</a>
        </div>
-    </div>
+    </div> -->
     <!-- Second quest -->
-    <div class="quest newq">
+    <!-- <div class="quest newq">
        <div class="qleft">
         <div class="questname">
           Proving Grounds - Endless Damage - Gold for Warlock
@@ -249,9 +318,9 @@
          </div>
          <a href="" class="pending">OFFER PENDING</a>
        </div>
-    </div>
+    </div> -->
     <!-- Third quest -->
-    <div class="quest newq">
+    <!-- <div class="quest newq">
        <div class="qleft">
         <div class="questname">
             LF 2x2 Arena Rating Boost 0-2000 (Rogue)
@@ -289,7 +358,7 @@ for Gladiator Gear. I have...
            </div>
            <a href="" class="accept">COMPLETE QUEST</a>
        </div>
-    </div>
+    </div> -->
   </div>
   <div class="sidebar">
     <% if current_user %>
