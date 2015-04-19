@@ -25,6 +25,7 @@ ActiveAdmin.register User do
       f.input :phone
       f.input :is_admin
       f.input :approved
+      f.input :balance
     end
     actions
   end
@@ -42,6 +43,7 @@ ActiveAdmin.register User do
     column :country
     column :phone
     column :is_admin
+    column :balance
     column ("Approved"){ |u| u.approved ? u.approved : link_to("Approve user", manual_approve_user_path(u.id))  }
     actions
   end
