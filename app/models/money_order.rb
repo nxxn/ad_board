@@ -6,7 +6,7 @@ class MoneyOrder < ActiveRecord::Base
 
   def paypal_url(return_path, notify_path)
     values = {
-      business: "n.gnotov-facilitator@gmail.com",
+      business: "PayPal@mmonster.eu",
       cmd: "_xclick",
       upload: 1,
       return: return_path,
@@ -17,7 +17,7 @@ class MoneyOrder < ActiveRecord::Base
       quantity: (amount.to_i),
       notify_url: notify_path
     }
-    "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
+    "https://www.paypal.com/cgi-bin/webscr?" + values.to_query
   end
 
 end
