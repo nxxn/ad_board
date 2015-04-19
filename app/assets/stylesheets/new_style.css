@@ -34,6 +34,15 @@ a {
     padding: 0 20px 0 20px;
 }
 
+.inner-header .header_alpha_sign {
+  float: right;
+  margin: 10px 0 0 20px;
+  color: #e9464b;
+  padding: 7px;
+  border: 3px solid #e9464b;
+  border-radius: 8px;
+}
+
 .logo {
     height: 60px;
     float: left;
