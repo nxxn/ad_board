@@ -639,3 +639,24 @@ a {
 .new_quest_for_presentation .radio {
   margin-right: 20px;
 }
+
+.home_page_reg_presentation {
+  margin: 18px 0 0 20px;
+  min-width: 65px;
+  min-height: 19px;
+  color: #ffffff !important;
+  background: #e9464b;
+  float: left;
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  padding-top: 1px;
+  border: none;
+  cursor: pointer;
+  padding: 1px 10px;
+}
+
+.home_page_reg_presentation a {
+  color: #ffffff !important;
+
+}

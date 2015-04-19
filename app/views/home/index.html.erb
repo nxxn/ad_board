@@ -227,18 +227,18 @@
                     <% if current_user.is_admin == true %>
                       <%= link_to "ACCEPT", accept_task_path(task), class: "accept" %>
                     <% else %>
-                    <%= link_to "ACCEPT", accept_task_path(task), class: "accept", style: "pointer-events: none; cursor: default;" %>
+                      <%= link_to "ACCEPT", accept_task_path(task), class: "accept", style: "pointer-events: none; cursor: default;" %>
                     <% end %>
                   <% else %>
                     <a href="" class="pending">OFFER PENDING</a>
                   <% end %>
                 <% elsif current_user && !current_user.profile_progress %>
-                  <%= link_to "ACCEPT", edit_user_registration_path(personal: "true"), class: "accept" %>
+                  <%= link_to "ACCEPT", edit_user_registration_path(personal: "true"), class: "accept", style: "pointer-events: none; cursor: default;" %>
                 <% elsif !current_user %>
-                  <%= link_to "ACCEPT", "/sign_up", class: "accept" %>
+                  <%= link_to "ACCEPT", "/sign_up", class: "accept", style: "pointer-events: none; cursor: default;" %>
                 <% elsif current_user.profile_progress && !current_user.approved %>
                   <% if current_user.is_admin == true %>
-                    <%= link_to "ACCEPT", accept_task_path(task), class: "accept" %>
+                    <%= link_to "ACCEPT", accept_task_path(task), class: "accept", style: "pointer-events: none; cursor: default;" %>
                   <% else %>
                     <%= link_to "ACCEPT", accept_task_path(task), class: "accept", style: "pointer-events: none; cursor: default;" %>
                   <% end %>
