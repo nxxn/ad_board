@@ -373,7 +373,7 @@ for Gladiator Gear. I have...
       <div class="profile">
         <div class="profleft">
           <p class="balance">My Balance:</p>
-          <p class="credits"><%= current_user.balance %> USD</p>
+          <p class="credits"><%= number_with_precision(current_user.balance, precision: 0) %> USD</p>
           <ul>
             <li class="more"><a href="">Add USD</a></li>
             <li class="fullprof"><%= link_to "Full profile", user_path(current_user) %></li>
