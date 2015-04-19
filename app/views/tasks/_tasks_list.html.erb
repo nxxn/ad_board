@@ -2,7 +2,7 @@
   <% pending_offers = task.offers.where(status: "Pending").count %>
   <% current_user_offers = task.offers.where(user_id: current_user.id).first if current_user %>
   <div class="quest" style="width: 1108px;">
-    <div class="qleft">
+    <div class="qleft" style="width: 840px;">
        <div class="questname">
          <%= truncate(task.name, length: 70, separator: ' ') %>
        </div>
@@ -34,7 +34,7 @@
     <div class="rewardbox">
       <div class="rewardbox_text">
         <p class="title">REWARD</p>
-        <p class="credits"><%= task.estimated_price %> EG</p>
+        <p class="credits"><%= task.estimated_price %> USD</p>
         <p class="exp">+ 280 XP</p>
         <p class="addrewards">Additional Rewards:</p>
       </div>
@@ -83,9 +83,9 @@
       </div>
       <div class="home_task_price quests_price">
         <% if task.final_price > 0 %>
-          <%= task.final_price %> EG
+          <%= task.final_price %> USD
         <% else %>
-          <%= task.estimated_price %> EG
+          <%= task.estimated_price %> USD
         <% end %>
       </div>
 

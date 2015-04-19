@@ -13,7 +13,7 @@ class MoneyOrder < ActiveRecord::Base
       rm: 0,
       invoice: invoice,
       amount: Setting.get_value("price_for_credit").to_f,
-      item_name: "EG credits",
+      item_name: "Payment for quest",
       quantity: (amount.to_i),
       notify_url: notify_path
     }

@@ -11,7 +11,7 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"> -->
 
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
   <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
@@ -121,8 +121,7 @@
      <div class="nright">
        <ul>
         <a href=""><li>My Actions</li></a>
-
-        <%= link_to "#", :data => {toggle: "modal", target: "#taskModal"} do %>
+        <%= link_to new_task_path do %>
           <li class="dropdown">+ New Quest</li>
         <% end %>
        </ul>

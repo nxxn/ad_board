@@ -28,12 +28,13 @@
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
+    <br>
 
-    <div class="user_new_container_recaptcha">
+    <!-- <div class="user_new_container_recaptcha">
       <%= recaptcha_tags %>
-    </div>
+    </div> -->
 
-    <button type="submit" class="btn btn-success">Sign Up</button>
+    <button type="submit" class="btn btn-success" style="background: #e9464b;">Sign Up</button>
   <% end %>
   <br>
   <%= render "devise/shared/links" %>

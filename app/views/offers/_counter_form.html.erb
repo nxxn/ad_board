@@ -6,11 +6,11 @@
           <%= f.hidden_field :task_id, value: task.id %>
           <% if existing_offer.user_id == current_user.id %>
             <b>Quest owner offered price:</b>
-            <span class="task_show_offer_price"><%= existing_offer.client_price %> EG</span>
+            <span class="task_show_offer_price"><%= existing_offer.client_price %> USD</span>
             <%= f.input :worker_price, label: "Your price" %>
           <% else %>
             <b><%= existing_offer.user.username %> offered price:</b>
-            <span class="task_show_offer_price"><%= existing_offer.worker_price %> EG</span>
+            <span class="task_show_offer_price"><%= existing_offer.worker_price %> USD</span>
             <%= f.input :client_price, label: "Your price" %>
           <% end %>
           <div class="make_offer_button_container">

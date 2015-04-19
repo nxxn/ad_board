@@ -585,3 +585,57 @@ a {
 }
 
 /* New design end */
+
+/* Design for presentation */
+
+.new_quest_for_presentation {
+  margin: 0 auto;
+  width: 500px;
+  background: url(b60.png);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.new_quest_for_presentation h2 {
+  margin: 0;
+}
+
+.new_quest_for_presentation form {
+  margin-top: -15px;
+}
+
+.new_quest_for_presentation input, .new_quest_for_presentation textarea {
+  width: 100%;
+  margin-top: 10px;
+  height: 20px;
+}
+
+.new_quest_for_presentation textarea {
+  height: 150px;
+}
+
+.new_quest_for_presentation .radio_buttons {
+  width: 20px !important;
+  height: 13px !important;
+}
+
+.new_quest_for_presentation_submit {
+  min-width: 65px;
+  width: 507px !important;
+  min-height: 30px;
+  height: 30px;
+  color: #ffffff !important;
+  background: #e9464b;
+  text-align: center;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+}
+
+.new_quest_for_presentation .task_quest_type, .new_quest_for_presentation .task_play_methods {
+  width: 100% !important;
+}
+
+.new_quest_for_presentation .radio {
+  margin-right: 20px;
+}

@@ -7,7 +7,7 @@
   </div>
   <div class="task_show_small_container">
     <div class="task_show_name_price">
-      <%= @task.estimated_price %> EG
+      <%= @task.estimated_price %> USD
     </div>
     <div class="task_show_game">
       <% if @task.game && @task.quest_type %>
@@ -47,7 +47,7 @@
         <div class="task_show_offer">
 
           <div class="task_show_offer_first_line">
-            <span class="task_show_offer_username"><%= link_to offer.user.username, user_path(offer.user) %></span> offered <span class="task_show_offer_price"><%= offer.worker_price %> EG</span> for this quest
+            <span class="task_show_offer_username"><%= link_to offer.user.username, user_path(offer.user) %></span> offered <span class="task_show_offer_price"><%= offer.worker_price %> USD</span> for this quest
             <% if !offer.comment.blank? %>
               and left a <b>comment</b>: <br>
               <div class="task_show_offer_comment">
@@ -58,7 +58,7 @@
 
           <% if offer.client_times > offer.worker_times %>
             <%= offer.user_id == current_user.id ? "#{offer.task.user.username} offered price:" : "You counter offered price:" %>
-            <span class="task_show_offer_price"><%= offer.client_price %> EG</span>
+            <span class="task_show_offer_price"><%= offer.client_price %> USD</span>
           <% end %>
 
           <br>

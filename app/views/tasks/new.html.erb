@@ -1,0 +1,35 @@
+<div class="" style="">
+  <div class="new_quest_for_presentation">
+    <h2>Create your quest</h2>
+    <%= simple_form_for @task do |f| %>
+      <br>
+      <label class="string optional" for="task_name">Quest name</label>
+      <br>
+      <%= f.input :name, label: false %>
+      <br>
+      <label class="text optional" for="task_description">Quest description</label>
+      <br>
+      <%= f.input :description, label: false %>
+      <br>
+      <!-- <%= f.association :game %> -->
+      <label for="task_game_id">Game:</label>
+      <br>
+      <select class="select optional" id="task_game_id" name="task[game_id]">
+        <option value="1">World Of Warcraft</option>
+      </select>
+      <br><br>
+      <label class="radio_buttons optional">Quest type:</label>
+      <br>
+      <%= f.association :quest_type, as: :radio_buttons, label: false %>
+      <br><br>
+      <label class="radio_buttons optional">Play Methods:</label>
+      <br>
+      <%= f.association :play_methods, as: :radio_buttons, label: false %>
+      <br><br>
+      <label for="task_estimated_price">Your Price</label>
+      <%= f.input :estimated_price, label: false  %>
+      <br>
+      <%= f.submit "Create quest", class: "new_quest_for_presentation_submit" %>
+    <% end %>
+  </div>
+</div>

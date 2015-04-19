@@ -66,7 +66,7 @@
                   Offers: <%= task.offers_count %> / <%= @max_offers_count_for_quest %>
                 </div>
                 <div class="home_task_price quests_price">
-                  <%= task.estimated_price %> EG
+                  <%= task.estimated_price %> USD
                 </div>
                 <!-- Button trigger modal -->
                 <% if current_user && current_user != task.user %>
@@ -208,7 +208,7 @@
          <div class="rewardbox">
            <div class="rewardbox_text">
              <p class="title">REWARD</p>
-             <p class="credits"><%= task.estimated_price %> EG</p>
+             <p class="credits"><%= task.estimated_price %> USD</p>
              <p class="exp">+ 280 XP</p>
              <p class="addrewards">Additional Rewards:</p>
            </div>
@@ -224,7 +224,11 @@
               <% if task.offers_count < @max_offers_count_for_quest %>
                 <% if current_user && current_user.profile_progress && task.user_id != current_user.id && current_user.approved %>
                   <% if !current_user_offers %>
-                    <%= link_to "ACCEPT", accept_task_path(task), class: "accept" %>
+                    <% if current_user.is_admin == true %>
+                      <%= link_to "ACCEPT", accept_task_path(task), class: "accept" %>
+                    <% else %>
+                    <%= link_to "ACCEPT", accept_task_path(task), class: "accept", style: "pointer-events: none; cursor: default;" %>
+                    <% end %>
                   <% else %>
                     <a href="" class="pending">OFFER PENDING</a>
                   <% end %>
@@ -233,7 +237,11 @@
                 <% elsif !current_user %>
                   <%= link_to "ACCEPT", "/sign_up", class: "accept" %>
                 <% elsif current_user.profile_progress && !current_user.approved %>
-                  <%= link_to "ACCEPT", accept_task_path(task), class: "accept" %>
+                  <% if current_user.is_admin == true %>
+                    <%= link_to "ACCEPT", accept_task_path(task), class: "accept" %>
+                  <% else %>
+                    <%= link_to "ACCEPT", accept_task_path(task), class: "accept", style: "pointer-events: none; cursor: default;" %>
+                  <% end %>
                 <% end %>
               <% elsif current_user && task.offers_count == @max_offers_count_for_quest && current_user_offers %>
                 <a href="" class="pending">OFFER PENDING</a>
@@ -269,7 +277,7 @@
        <div class="rewardbox">
          <div class="rewardbox_text">
            <p class="title">REWARD</p>
-           <p class="credits">1000 EG</p>
+           <p class="credits">1000 USD</p>
            <p class="exp">+ 280 XP</p>
            <p class="addrewards">Additional Rewards:</p>
          </div>
@@ -307,7 +315,7 @@
        <div class="rewardbox">
          <div class="rewardbox_text">
            <p class="title">REWARD</p>
-           <p class="credits">2500 EG</p>
+           <p class="credits">2500 USD</p>
            <p class="exp">+ 510 XP</p>
            <p class="addrewards">Additional Rewards:</p>
          </div>
@@ -347,7 +355,7 @@ for Gladiator Gear. I have...
        <div class="rewardbox">
          <div class="rewardbox_text">
            <p class="title">REWARD</p>
-           <p class="credits">1200 EG</p>
+           <p class="credits">1200 USD</p>
            <p class="exp">+ 310 XP</p>
            <p class="addrewards">Additional Rewards:</p>
          </div>
@@ -365,9 +373,9 @@ for Gladiator Gear. I have...
       <div class="profile">
         <div class="profleft">
           <p class="balance">My Balance:</p>
-          <p class="credits"><%= current_user.balance %> EG</p>
+          <p class="credits"><%= current_user.balance %> USD</p>
           <ul>
-            <li class="more"><a href="">Add EG</a></li>
+            <li class="more"><a href="">Add USD</a></li>
             <li class="fullprof"><%= link_to "Full profile", user_path(current_user) %></li>
           </ul>
         </div>

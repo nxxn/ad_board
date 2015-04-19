@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
       return: return_path,
       invoice: SecureRandom.uuid,
       amount: 10,
-      item_name: "EG credits",
+      item_name: "USD credits",
       quantity: '1',
       notify_url: "http://ad_board.ngrok.com/hook"
     }
