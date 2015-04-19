@@ -26,10 +26,11 @@
       <br>
       <%= f.association :play_methods, as: :radio_buttons, label: false %>
       <br><br>
-      <label for="task_estimated_price">Your Price</label>
-      <%= f.input :estimated_price, label: false  %>
-      <br>
-      <%= f.submit "Create quest", class: "new_quest_for_presentation_submit" %>
+      <label for="task_estimated_price">Your Price (can only be whole number)</label>
+      <input class="numeric float optional" id="task_estimated_price" name="task[estimated_price]" step="1" type="number" value="1">
+      <!-- <%= f.input :estimated_price, label: false  %> -->
+      <br><br>
+      <%= f.submit "CREATE QUEST", class: "new_quest_for_presentation_submit" %>
     <% end %>
   </div>
 </div>
