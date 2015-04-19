@@ -76,7 +76,7 @@ AdBoard::Application.configure do
   }
 
   config.action_mailer.default_url_options = {
-    :host => "stark-spire-6006.herokuapp.com"
+    :host => "mmonster.herokuapp.com"
   }
 
   config.paperclip_defaults = {
