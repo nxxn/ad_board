@@ -35,7 +35,7 @@
       <div class="rewardbox">
         <div class="rewardbox_text">
           <p class="title">REWARD</p>
-          <p class="credits"><%= task.estimated_price %> USD</p>
+          <p class="credits"><%= number_with_precision(task.estimated_price, precision: 0) %> USD</p>
           <p class="exp">+ 280 XP</p>
           <p class="addrewards">Additional Rewards:</p>
         </div>
