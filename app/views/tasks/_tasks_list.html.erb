@@ -25,7 +25,7 @@
            </div>
          </div>
          <div class="submitted">
-           Submitted by <%= link_to task.user.username %> on: <%= task.created_at.strftime("%A %d/%m/%Y") %>
+           Submitted by <%= link_to task.user.username, "#" %> on: <%= task.created_at.strftime("%A %d/%m/%Y") %>
          </div>
          <div class="offerstatus">
            Offers: <%= task.offers_count %> / <%= @max_offers_count_for_quest %>
