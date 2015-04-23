@@ -14,6 +14,22 @@
     </div> -->
   </div>
   <div class="user_show_public_right">
+    <div class="msg-popup new-message">
+      <form accept-charset="UTF-8" action="/messages/send/<%= @user.id %>" method="post" enctype="multipart/form-data">
+        <div class="popup-body">
+        	<p>Message to <%= @user.username %></p>
+        	<%= hidden_field_tag :subject %>
+        	<%= text_area_tag :body, nil, required: true %>
+          <%= file_field_tag 'attachment' %>
+        </div>
+      	<div class="popup-footer">
+      		<div class="btn-group">
+      			<span id="popup-cancel" class="btn cancel-btn">Cancel</span>
+      			<%= submit_tag 'Send', class: "btn save-btn", data: {disable_with: "Sending..."} %>
+      		</div>
+      	</div>
+      </form>
+    </div>
     <div class="user_show_public_right_rating">
       User rating
     </div>

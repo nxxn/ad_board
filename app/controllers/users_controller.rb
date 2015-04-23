@@ -5,7 +5,8 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     @offer = Offer.new
     @completed_quests = Task.where(worker_id: @user.id, status: "completed")
-    @user_quests = Task.where(user_id: @user.id, active: true).includes(:game, :quest_type, :play_methods)
+    @user_quests = Task.where(user_id: @user.id, active: true)
+    # .includes(:game, :quest_type, :play_methods)
   end
 
   def tasks

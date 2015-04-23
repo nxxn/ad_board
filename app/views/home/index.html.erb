@@ -199,7 +199,7 @@
             </div>
           </div>
           <div class="submitted">
-            Submitted by <%= link_to task.user.username, "#" %> on: <%= task.created_at.strftime("%A %d/%m/%Y") %>
+            Submitted by <%= link_to task.user.username, user_path(task.user) %> on: <%= task.created_at.strftime("%A %d/%m/%Y") %>
           </div>
           <div class="offerstatus">
             Offers: <%= task.offers_count %> / <%= @max_offers_count_for_quest %>
@@ -250,123 +250,6 @@
          </div>
       </div>
     <% end %>
-
-    <!-- <div class="quest newq">
-       <div class="qleft">
-        <div class="questname">
-          Black Rock Foundry Heroic lootrun with Master Looter (Feral Druid)
-        </div>
-        <div class="questdesc">
-          Hi, i am playing feral druid and i am looking for BRF HC Boost with Loot. I have 670 Gearscore. Selfplay only!
-        </div>
-        <div class="questtype">
-          <p>Quest Type:</p>
-          <div class="icons">
-            <img src="assets/icons/wow.png" alt="">
-            <img src="assets/icons/raid.png" alt="">
-            <img src="assets/icons/selfplay.png" alt="">
-          </div>
-        </div>
-        <div class="submitted">
-          Submitted by <a href="">username</a> on: Sunday 29/03/2015
-        </div>
-        <div class="offerstatus">
-          Offers: 0/10
-        </div>
-       </div>
-       <div class="rewardbox">
-         <div class="rewardbox_text">
-           <p class="title">REWARD</p>
-           <p class="credits">1000 USD</p>
-           <p class="exp">+ 280 XP</p>
-           <p class="addrewards">Additional Rewards:</p>
-         </div>
-         <div class="chests">
-             <img src="assets/icons/small_green.png" alt="">
-             <img src="assets/icons/small_blue.png" alt="">
-             <img src="assets/icons/small_epic.png" alt="">
-         </div>
-         <a href="" class="accept">ACCEPT QUEST</a>
-       </div>
-    </div> -->
-    <!-- Second quest -->
-    <!-- <div class="quest newq">
-       <div class="qleft">
-        <div class="questname">
-          Proving Grounds - Endless Damage - Gold for Warlock
-        </div>
-        <div class="questdesc">
-          Hi, WTB Proving Grounds - Endless Damage - Gold for Warlock. With Livestream please! PG Silver already...
-        </div>
-        <div class="questtype">
-            <p>Quest Type:</p>
-            <div class="icons">
-                <img src="assets/icons/wow.png" alt="">
-                <img src="assets/icons/stream.png" alt="">
-            </div>
-        </div>
-        <div class="submitted">
-          Submitted by <a href="">username</a> on: Sunday 29/03/2015
-        </div>
-        <div class="offerstatus">
-          You have already submitted an offer
-        </div>
-       </div>
-       <div class="rewardbox">
-         <div class="rewardbox_text">
-           <p class="title">REWARD</p>
-           <p class="credits">2500 USD</p>
-           <p class="exp">+ 510 XP</p>
-           <p class="addrewards">Additional Rewards:</p>
-         </div>
-         <div class="chests">
-           <img src="assets/icons/small_green.png" alt="">
-           <img src="assets/icons/small_blue.png" alt="">
-           <img src="assets/icons/small_epic.png" alt="">
-         </div>
-         <a href="" class="pending">OFFER PENDING</a>
-       </div>
-    </div> -->
-    <!-- Third quest -->
-    <!-- <div class="quest newq">
-       <div class="qleft">
-        <div class="questname">
-            LF 2x2 Arena Rating Boost 0-2000 (Rogue)
-        </div>
-        <div class="questdesc">
-            Hi, i am looking for someone who can boost me on 2x2 Arena. I need 2000 Rating
-for Gladiator Gear. I have...
-        </div>
-        <div class="questtype">
-            <p>Quest Type:</p>
-            <div class="icons">
-                <img src="assets/icons/wow.png" alt="">
-                <img src="assets/icons/pvp.png" alt="">
-                <img src="assets/icons/stream.png" alt="">
-            </div>
-        </div>
-        <div class="submitted">
-            Submitted by <a href="">username</a> on: Sunday 29/03/2015
-        </div>
-        <div class="offerstatus">
-            Your offer was approved
-        </div>
-       </div>
-       <div class="rewardbox">
-         <div class="rewardbox_text">
-           <p class="title">REWARD</p>
-           <p class="credits">1200 USD</p>
-           <p class="exp">+ 310 XP</p>
-           <p class="addrewards">Additional Rewards:</p>
-         </div>
-           <div class="chests">
-               <img src="assets/icons/small_green.png" alt="">
-               <img src="assets/icons/small_blue.png" alt="">
-               <img src="assets/icons/small_epic.png" alt="">
-           </div>
-           <a href="" class="accept">COMPLETE QUEST</a>
-       </div>
-    </div> -->
   </div>
   <div class="sidebar">
     <% if current_user %>
@@ -376,7 +259,7 @@ for Gladiator Gear. I have...
           <p class="credits"><%= number_with_precision(current_user.balance, precision: 0) %> USD</p>
           <ul>
             <li class="more"><a href="">Add USD</a></li>
-            <li class="fullprof"><%= link_to "Full profile", "#" %></li>
+            <li class="fullprof"><%= link_to "Full profile", user_path(current_user) %></li>
           </ul>
         </div>
        <div class="profright">

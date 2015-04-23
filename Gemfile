@@ -57,3 +57,6 @@ gem 'mailboxer'
 
 #Local time
 gem 'local_time'
+
+#Carrierwave S3
+gem "fog", "~> 1.3.1"

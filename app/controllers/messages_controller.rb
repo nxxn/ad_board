@@ -1,20 +1,21 @@
 class MessagesController < ApplicationController
+	protect_from_forgery except: [:send_message]
 
 	def show_conversations
     @user = User.find(params[:user_id])
 
     @conversations = @user.mailbox.conversations.includes(:receipts => [:receiver])
 
-		@conversations = @conversations.reject do |conversation|
-			user = conversation.participants.select{ |p| !p.id.eql?(current_user.id)}
-			user.empty? || user.nil?
-		end
+		# @conversations = @conversations.reject do |conversation|
+		# 	user = conversation.participants.select{ |p| !p.id.eql?(current_user.id)}
+		# 	user.empty? || user.nil?
+		# end
 
     if current_user == @user
       if @conversations.present?
       	#Last conversation (chronologically, the first in the inbox)
       	@conversation = @conversations.first
-      	@messages = @conversation.messages.order('created_at DESC').paginate(:page => params[:messages_page], :per_page => 10)
+      	@messages = @conversation.messages.includes(:sender).order('created_at DESC')
       	@messages.each do |message|
           message.mark_as_read(@user) if message.is_unread?(@user)
         end
@@ -68,7 +69,7 @@ class MessagesController < ApplicationController
 
   def show_messages
     @user = User.find(params[:user_id])
-  	@conversation = Conversation.find(params[:conversation_id])
+  	@conversation = Mailboxer::Conversation.find(params[:conversation_id])
   	@messages = @conversation.messages.order('created_at DESC')
     @messages.each do |message|
         message.mark_as_read(@user) if message.is_unread?(@user)
@@ -76,8 +77,8 @@ class MessagesController < ApplicationController
   	@unread_messages = @user.mailbox.inbox(read: false).size
 
   	respond_to do |format|
-      	format.html {render 'show_conversations'}
-      	format.js {render 'show_conversations' if params[:messages_page].present? || params[:conversations_page].present?}
+    	format.html {render 'show_conversations'}
+    	format.js {render 'show_conversations' if params[:messages_page].present? || params[:conversations_page].present?}
     end
   end
 
@@ -107,23 +108,26 @@ class MessagesController < ApplicationController
 		@conversation = Conversation.participant(@user).where('conversations.id in (?)', Conversation.participant(@recipient).collect(&:id)).first
 
     respond_to do |format|
-        format.js
+      format.js
     end
   end
 
   def send_message
     @user = current_user
-    params[:subject] = params[:subject].blank? ? "Chat message" : params[:subject]
-    recipient = User.find(params[:recipient_id])
-    recipient_id = recipient.id
-
+    @subject = params[:subject].blank? ? "Chat message" : params[:subject]
+    @recipient = User.find(params[:recipient_id])
 		@message_text = params[:body].gsub(/(?:\n\r?|\r\n?)/, '<br>')
+		@attachment = params[:attachment]
 
-		@user.send_message(params[:recipient_id], @message_text, params[:subject])
+		@conversation = Mailboxer::Conversation.participant(@user).where('mailboxer_conversations.id in (?)', Mailboxer::Conversation.participant(@recipient).collect(&:id)).first
 
-    respond_to do |format|
-        format.js
-    end
+		if @conversation.present?
+			@user.reply_to_conversation(@conversation, @message_text, subject=nil, should_untrash=true, sanitize_text=true, @attachment)
+		else
+			@user.send_message(@recipient, @message_text, @subject, sanitize_text=true, @attachment)
+		end
+
+    redirect_to :back
   end
 
   def incoming_conversation
