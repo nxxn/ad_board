@@ -24,7 +24,11 @@
     <% end %>
     <%= message.sender.username %>
     <%= local_time(message.updated_at, "%d %b %H:%M") %>
-    <%= message.body.gsub(/\<br>/," ") %>
-    <%= image_tag(message.attachment_url) %>
+    <% if !message.body.blank? %>
+      <%= message.body.gsub(/\<br>/," ") %>
+    <% end %>
+    <% if message.attachment.present? %>
+      <%= image_tag(message.attachment_url) %>
+    <% end %>
   </div>
 <% end %>
