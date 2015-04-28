@@ -60,3 +60,6 @@ gem 'local_time'
 
 #Carrierwave S3
 gem "fog", "~> 1.3.1"
+
+#File upload with remote form
+gem 'remotipart', '~> 1.2'

@@ -1,7 +1,9 @@
 <% participant = @conversation.participants.select{ |p| !p.id.eql?(current_user.id)} %>
 <% @other_user = User.find(participant[0].id) %>
 
-<form accept-charset="UTF-8" action="/messages/send/<%= @other_user.id %>" method="post" enctype="multipart/form-data">
+<!-- <form accept-charset="UTF-8" action="/messages/send/<%= @other_user.id %>" method="post" enctype="multipart/form-data"> -->
+<%= form_for :message, url: user_message_reply_path(@user, @conversation), remote: true do |f| %>
+
   <div class="popup-body">
     <%= hidden_field_tag :subject %>
     <%= text_area_tag :body, nil, required: true %>
@@ -13,22 +15,26 @@
       <%= submit_tag 'Send', class: "btn save-btn", data: {disable_with: "Sending..."} %>
     </div>
   </div>
-</form>
 
-<% @messages.each do |message| %>
-  <div class="">
-    <% if message.sender.avatar.present? %>
-      <%= image_tag message.sender.avatar.url(:thumb), alt: "Avatar" %>
-    <% else %>
-      <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
-    <% end %>
-    <%= message.sender.username %>
-    <%= local_time(message.updated_at, "%d %b %H:%M") %>
-    <% if !message.body.blank? %>
-      <%= message.body.gsub(/\<br>/," ") %>
-    <% end %>
-    <% if message.attachment.present? %>
-      <%= image_tag(message.attachment_url) %>
-    <% end %>
-  </div>
 <% end %>
+<!-- </form> -->
+
+<div class="messages_container">
+  <% @messages.each do |message| %>
+    <div class="message_item">
+      <% if message.sender.avatar.present? %>
+        <%= image_tag message.sender.avatar.url(:thumb), alt: "Avatar" %>
+      <% else %>
+        <%= image_tag("user_avatar.jpg", alt: "Avatar") %>
+      <% end %>
+      <%= message.sender.username %>
+      <%= local_time(message.updated_at, "%d %b %H:%M") %>
+      <% if !message.body.blank? %>
+        <%= message.body.gsub(/\<br>/," ") %>
+      <% end %>
+      <% if message.attachment.present? %>
+        <%= image_tag(message.attachment_url) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

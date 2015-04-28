@@ -13,6 +13,7 @@ AdBoard::Application.routes.draw do
   get 'users/:user_id/messages', to: 'messages#show_conversations', as: :user_conversations
   get '/:user_id/messages/:conversation_id', to: 'messages#show_messages', as: :user_messages
   post 'messages/send/:recipient_id', to: 'messages#send_message', as: :send_message
+  post '/users/:user_id/messages/:conversation_id/reply', to: 'messages#reply', as: :user_message_reply
 
   resources :users do
     member do

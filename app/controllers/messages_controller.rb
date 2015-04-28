@@ -32,34 +32,36 @@ class MessagesController < ApplicationController
   end
 
   def reply
-		@user = UserDecorator.decorate User.find(params[:user_id])
+		@user = User.find(params[:user_id])
 
-		@conversation = Conversation.find(params[:conversation_id])
+		@conversation = Mailboxer::Conversation.find(params[:conversation_id])
 		@conversation.touch
 
-		@message_text = params[:message][:body]
-		@message_time = Time.now
+		@message_text = params[:body]
+		# @message_time = Time.now
 
 		@conversations = @user.mailbox.conversations.includes(:receipts => [:receiver])
 
-		@conversations = @conversations.reject do |conversation|
-			user = conversation.participants.select{ |p| !p.id.eql?(current_user.id)}
-			user.empty?
-		end
+		@attachment = params[:attachment]
 
-		@conversations = @conversations.paginate(:page => params[:conversations_page], :per_page => 5)
+		# @conversations = @conversations.reject do |conversation|
+		# 	user = conversation.participants.select{ |p| !p.id.eql?(current_user.id)}
+		# 	user.empty?
+		# end
 
-		@user.reply_to_conversation(@conversation, @message_text)
+		# @conversations = @conversations.paginate(:page => params[:conversations_page], :per_page => 5)
 
-		MessagingMailWorker.perform_async(@user.id, @conversation.id, @message_text)
+		@user.reply_to_conversation(@conversation, @message_text, subject=nil, should_untrash=true, sanitize_text=true, @attachment)
+
+		# MessagingMailWorker.perform_async(@user.id, @conversation.id, @message_text)
 
 		@message = @conversation.messages.last
-
-		participant = @conversation.participants.select{ |p| !p.id.eql?(@user.id)}
-
-		recipient_id = participant[0].id
-
-		PushToIosWorker.perform_async(@conversation.id, recipient_id, @user.name, @message_text, current_user.id)
+		#
+		# participant = @conversation.participants.select{ |p| !p.id.eql?(@user.id)}
+		#
+		# recipient_id = participant[0].id
+		#
+		# PushToIosWorker.perform_async(@conversation.id, recipient_id, @user.name, @message_text, current_user.id)
 
   	respond_to do |format|
   		format.html
